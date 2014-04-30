@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>King of the Fridge</title>
+    <script type="text/javascript" src="../prototype.js"></script>
+    <script type="text/javascript">
+      var items = ['apple','mushrooms','carrots','chiles',
+                   'potato','tomato'];
+
+      window.onload = function() {
+        arrange();
+        items.each(
+          function(item,index) {
+            $(item).onclick = raiseItem.bind($(item));
+          }
+        );
+        $(items[0]).focus();
+      }
+
+      function arrange() {
+        items.each(
+          function(image,index) {
+            $(image).style.left = 16 + (40 * index);
+            $(image).style.top = 16 + (40 * index);
+            $(image).style.zIndex = index + 1;
+            $(image).innerHTML = $(image).style.zIndex;
+          }
+        );
+      }
+
+      function raiseItem() {
+        var itemIndex = this.style.zIndex - 1;
+        var newItems = [];
+        items.each(
+          function(item,index) {
+            if (index != itemIndex) newItems.push(item);
+          }
+        );
+        newItems.push(this);
+        items = newItems;
+        arrange();
+      }
+    </script>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <style type="text/css">
+      #container {
+        position: relative;
+      }
+      #container div {
+        position: absolute;
+        width: 110px;
+        height: 86px;
+        border: 1px silver solid;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="apple"
+           style="background-image:url('apple.jpg')"></div>
+      <div id="mushrooms"
+           style="background-image:url('mushrooms.jpg')"></div>
+      <div id="carrots"
+           style="background-image:url('carrots.jpg')"></div>
+      <div id="chiles"
+           style="background-image:url('chiles.jpg')"></div>
+      <div id="potato"
+           style="background-image:url('potato.jpg')"></div>
+      <div id="tomato"
+           style="background-image:url('tomato.jpg')"></div>
+    </div>
+  </body>
+
+</html>

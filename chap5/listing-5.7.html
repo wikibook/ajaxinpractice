@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Events!</title>
+    <script type="text/javascript" src="prototype-1.5.1.js">
+    </script>
+    <script type="text/javascript">
+      window.onload = function() {
+        Event.observe('anImage', 'click', react, false);
+        Event.observe('level1', 'click', react, true);
+        Event.observe('level2', 'click', react, false);
+      }
+
+      function react(event) {
+        $('info').innerHTML +=
+          'I woof at ' + Event.element(event).id + '!<br/>';
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="level1">
+      <div id="level2">
+        <img src="image.jpg" id="anImage"/>
+      </div>
+    </div>
+    <div id="info"></div>
+  </body>
+</html>

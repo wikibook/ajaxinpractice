@@ -1,0 +1,74 @@
+<HTML>
+  <HEAD>
+    <TITLE>Chaotic Images - Tree Navigation</TITLE>
+    <SCRIPT SRC='../assets/js/qooxdoo/include.js' TYPE='text/javascript'></SCRIPT>
+
+    <SCRIPT LANGUAGE='JavaScript'>
+      <!--
+  window.application.main = function()
+  {
+    var d = this.getClientWindow().getClientDocument();
+
+    var panel = new QxImage('../assets/images/chaos/ifs/spirochete.jpg');
+    panel.set({ left: 204, top: 48, width: 320, height: 320 });
+    d.add(panel);
+
+    var addNode=function(parent,title){
+      var node=new QxTreeFolder(title);
+      if (parent){
+        parent.addToFolder(node);
+      }
+      return node;
+    }
+
+    var addLeafNode=function(parent,title,image,hasThumbnail){
+      var iconUrl=(hasThumbnail) ? image+'16.jpg' : null;
+      var mainUrl=(hasThumbnail) ? image+'.jpg' : image;
+      var leaf=new QxTreeFile(title,iconUrl);
+      leaf.addEventListener(
+        "click",
+        function(e){
+          panel.set({ source:mainUrl });
+        }
+      );
+      parent.addToFolder(leaf);
+      return leaf;
+    }
+
+    var tree = new QxTree('Chaos');
+    tree.useTreeLines=true;
+    tree.set({ left: 20, top: 48, width: 180, height: 320 });
+
+    var nodeIFS=addNode(tree,'IFS');
+    addLeafNode(nodeIFS,'Dreamsilk','../assets/images/chaos/ifs/dreamsilk',true);
+
+    addLeafNode(nodeIFS,'Leaf','../assets/images/chaos/ifs/leaf',true);
+    addLeafNode(nodeIFS,'Spirochete','../assets/images/chaos/ifs/spirochete',true);
+    addLeafNode(nodeIFS,'Trilobite','../assets/images/chaos/ifs/trilobite',true);
+
+
+    var nodeLS=addNode(tree,'L-systems');
+    addLeafNode(nodeLS,'Bush','../assets/images/chaos/ls/bush.jpg');
+    addLeafNode(nodeLS,'Weed','../assets/images/chaos/ls/weed.jpg');
+
+    var nodeSA=addNode(tree,'Strange Attractors');
+    var nodeSA_2D=addNode(nodeSA,'2D');
+    nodeSA.addToFolder(nodeSA_2D);
+    addLeafNode(nodeSA_2D,'deJong','../assets/images/chaos/sa/sa2d/deJong.jpg');
+    addLeafNode(nodeSA_2D,'Lorenz','../assets/images/chaos/sa/sa2d/lorenzII.jpg');
+    addLeafNode(nodeSA_2D,'Poly I','../assets/images/chaos/sa/sa2d/quad.jpg');
+    addLeafNode(nodeSA_2D,'Poly II','../assets/images/chaos/sa/sa2d/quad2.jpg');
+
+    var nodeSA_3D=addNode(nodeSA,'3D');
+    addLeafNode(nodeSA_3D,'Poly I','../assets/images/chaos/sa/sa3d/KRTY_240.gif');
+    addLeafNode(nodeSA_3D,'Poly II','../assets/images/chaos/sa/sa3d/MMDW_240.gif');
+
+    d.add(tree);
+  };
+      //-->
+    </SCRIPT>
+  </HEAD>
+  <BODY>
+
+  </BODY>
+</HTML>

@@ -1,0 +1,59 @@
+<HTML>
+  <HEAD>
+    <TITLE>Chaotic Images</TITLE>
+    <SCRIPT SRC='../assets/js/qooxdoo/include.js' TYPE='text/javascript'></SCRIPT>
+
+    <SCRIPT TYPE='text/javascript'>
+      <!--
+window.application.main = function(){
+
+  var d  = this.getClientWindow().getClientDocument();
+  var tb = new QxToolBar();
+  tb.set({top : 20, left : 20, width : 602});
+
+  createLaunchButton(tb, 'Dreamsilk', '../assets/images/chaos/ifs/dreamsilk.jpg');
+  createLaunchButton(tb, 'Leaf', '../assets/images/chaos/ifs/leaf.jpg');
+  createLaunchButton(tb, 'Spirochete' ,'../assets/images/chaos/ifs/spirochete.jpg');
+  createLaunchButton(tb, 'Trilobite', '../assets/images/chaos/ifs/trilobite.jpg');
+
+  d.add(tb);
+}
+
+var windowCount=0;
+
+function createLaunchButton(toolbar,title,image){
+  var button = new QxToolBarButton(title, 'icons/32/bitmapgraphics.png');
+  button.setWidth(150);
+  button.addEventListener(
+    'execute',
+    function(){
+      if (!button.window){
+        var d  = window.application.getClientWindow().getClientDocument();
+        var win=new QxWindow(title, 'icons/16/bitmapgraphics.png');
+
+        win.setSpace(20+(48*(windowCount+1)), 320, 20+(48*(windowCount+1)), 320);
+        win.set({showMinimize : false, showMaximize : false, resizeable : false});
+        win.add(new QxImage(image));
+
+        d.add(win);
+
+        button.window=win;
+        windowCount++;
+      }
+      if (button.window.isSeeable()){
+        button.window.close();
+      }else{
+        button.window.open();
+      }
+    }
+  );
+
+  toolbar.add(button);
+}
+
+      //-->
+    </SCRIPT>
+  </HEAD>
+  <BODY>
+  </BODY>
+</HTML>

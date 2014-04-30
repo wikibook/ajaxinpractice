@@ -1,0 +1,25 @@
+<trip title="Storm Chase 2006" flickrNSID="97775920@N00" flickrKey="78eaa5287f3f0b37dfba77ef40c7df03">
+  <![CDATA[
+    This is where a descriptive comment for the trip will appear. It can use <b>HTML markup</b> but be careful not to put anything in here that would boof up the formatting of the page.
+  ]]>
+  <poi name="Austin, TX" latitude="30.266748" longitude="-97.74176" photoSetId="72057594127623732">
+    <![CDATA[
+      We started in Austin, TX on May 23, 2006. It was a <i>gorgeous</i> and sunny day. Little did we know what was in store for us...
+    ]]>
+  </poi>
+  <poi name="Oklahoma City, OK" latitude="0" longitude="0" photoSetId="72057594124507396">
+    whatever
+  </poi>
+  <poi name="Wakita, OK" latitude="36.88229" longitude="-97.921959" photoSetId="72057594124507396">
+    We visited the Twister Museum in Wakita, OK. The town that got "blown away" in the movie Twister.
+  </poi>
+  <poi name="Topeka, KS" latitude="0" longitude="0" photoSetId="72057594124507396">
+    whatever
+  </poi>
+  <poi name="Lincoln, NE" latitude="0" longitude="0" photoSetId="72057594124507396">
+    whatever
+  </poi>
+  <poi name="Mount Rushmore" latitude="0" longitude="0" photoSetId="72057594124507396">
+    whatever
+  </poi>
+</trip>

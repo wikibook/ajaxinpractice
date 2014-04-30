@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Events!</title>
+    <script type="text/javascript">
+      window.onload = function() {
+        document.getElementById('anImage').onclick =
+          function(event) {
+            if (!event) event = window.event;
+            var target =
+              event.target ? event.target : event.srcElement;
+            document.getElementById('info').innerHTML +=
+              'I woof at ' + target.id + '!<br/>';
+          }
+      }
+    </script>
+  </head>
+
+  <body>
+    <img src="image.jpg" id="anImage"/>
+    <div id="info"></div>
+  </body>
+</html>

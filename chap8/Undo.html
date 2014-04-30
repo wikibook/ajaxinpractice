@@ -1,0 +1,96 @@
+<HTML>
+  <HEAD>
+    <SCRIPT type="text/javascript" src="./assets/js/prototype.js"></SCRIPT>
+    <SCRIPT type="text/javascript" src="./assets/js/json.js"></SCRIPT>
+    <SCRIPT type="text/javascript" src="./assets/js/Undo.js"></SCRIPT>
+  </HEAD>
+  <BODY>
+    <INPUT TYPE='button' ID='undoButton' VALUE='Undo' onClick='undoStack.undo()' disabled='true'>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <INPUT TYPE='button' ID='redoButton' VALUE='Redo' onClick='undoStack.redo()' disabled='true'>
+    <BR><BR>
+    <INPUT TYPE='button' VALUE='Debug' onClick='$("debug").toggle()'>
+    <BR><BR>
+    <FORM>
+      <INPUT NAME='baz' ID='baz' VALUE='hi'>
+      <BR>
+      <TEXTAREA NAME='foo' ID='foo'></TEXTAREA>
+    </FORM>
+    <DIV STYLE='border: 1px solid #FF0000;display:none' ID='debug'></DIV>
+  </BODY>
+<SCRIPT LANGUAGE='JavaScript'>
+  <!--
+window.onload = function(){
+    addTextEventListener('foo');
+    addTextEventListener('baz');
+    undoStack.init(demoHandler);
+}
+
+function addTextEventListener(element){
+    Event.observe(
+        element,
+        'keydown',
+        startTextUndo
+    );
+    Event.observe(
+        element,
+        'keyup',
+        endTextUndo
+    );
+}
+
+
+/*
+called when key pressed - record previous value for this input
+*/
+function startTextUndo(event){
+    var target   =Event.element(event);;
+    var keyCode  =event.which || event.keyCode;
+
+    if((keyCode != 16 && keyCode != 17 && keyCode != 18) && // ignore shift,ctl,alt keys
+     !((keyCode ==  90) && event.ctrlKey) && // z + control
+     !((keyCode ==  89) && event.ctrlKey)) // y + control
+    {
+        target.beforeUndoVal=target.value;
+    }
+}
+
+/*
+called when key up - add entry to undo stack
+*/
+function endTextUndo(event){
+    var target   =Event.element(event);;
+    var keyCode  =event.which || event.keyCode;
+
+    if((keyCode != 16 && keyCode != 17 && keyCode != 18) && // ignore shift,ctl,alt keys
+     !((keyCode ==  90) && event.ctrlKey) && // z + control
+     !((keyCode ==  89) && event.ctrlKey)) // y + control
+    {
+        undoStack.add(
+            'TEXT',
+            {
+                elementRef:target.id,
+                prevValue :target.beforeUndoVal,
+                newValue  :target.value
+            }
+        );
+    }
+}
+
+/*
+callback for undo stack, for text input fields
+*/
+function demoHandler(action,undo){
+    if(action){
+        if(action.type == 'TEXT'){
+            var el=$(action.value.elementRef);
+            el.value=(undo) ? action.value.prevValue : action.value.newValue;
+        }
+
+        $('undoButton').disabled=!action.canUndo;
+        $('redoButton').disabled=!action.canRedo;
+    }
+}
+//-->
+</SCRIPT>
+</HTML>

@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>What's for dinner?</title>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript" src="rico.js"></script>
+    <script>
+      window.onload = function() {
+        ajaxEngine.registerRequest('fetchItemData','fetchItem.jsp');
+        ajaxEngine.registerAjaxElement('itemData');
+      }
+
+      function showItemInfo( select ) {
+        ajaxEngine.sendRequest( 'fetchItemData', 'id='+select.value );
+      }
+    </script>
+  </head>
+
+  <body>
+    <form style="float:left">
+      <select name="items" size="6" onchange="showItemInfo(this)">
+        <option value="1">Milk</option>
+        <option value="2">Cole Slaw</option>
+        <option value="3">BBQ Sauce</option>
+        <option value="4">Lunch Meat</option>
+        <option value="5">Mustard</option>
+        <option value="6">Hot Sauce</option>
+        <option value="7">Cheese</option>
+        <option value="8">Iced Tea</option>
+      </select>
+    </form>
+
+    <div id="itemData" style="float:left"></div>
+  </body>
+
+</html>

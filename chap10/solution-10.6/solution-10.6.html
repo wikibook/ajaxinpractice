@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>Stop the insanity!</title>
+    <script type="text/javascript" src="../prototype.js"></script>
+    <script type="text/javascript">
+      function performSearch(button) {
+        button.disabled = true;
+        $('resultsContainer').innerHTML = '';
+        var request = new Ajax.Request(
+          '/aip.chap10/command/SearchForRecipes',
+          {
+            onSuccess: function() { showResults(request) },
+            onFailure: function() { showResults(request) },
+            parameters:
+              $H({
+                terms: $F('searchTermsField')
+              }).toQueryString(),
+            trigger: button
+          }
+        );
+        Element.show('processingNotice');
+      }
+
+      function showResults(request) {
+        request.options.trigger.disabled = false;
+        Element.hide('processingNotice');
+        $('resultsContainer').innerHTML =
+          request.transport.responseText;
+      }
+    </script>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+  </head>
+
+  <body>
+
+    <fieldset>
+      <legend>Find Recipes</legend>
+
+      <form name="searchForm" onsubmit="return false">
+
+        <div>
+          <label>Where recipe title contains: </label>
+          <input type="text" name="searchTerms"
+                 id="searchTermsField"/>
+        </div>
+
+        <div>
+          <input type="button" value="Search!"
+                 onclick="performSearch(this)"/>
+        </div>
+      </form>
+
+      <div id="processingNotice" style="display:none">
+        <img src="whirlybug.gif"/>Searching!
+      </div>
+
+      <div id="resultsContainer"></div>
+
+    </fieldset>
+
+  </body>
+</html>

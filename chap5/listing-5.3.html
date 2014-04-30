@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Events!</title>
+    <script type="text/javascript">
+      window.onload = function() {
+        document.getElementById('anImage').addEventListener(
+          'click',
+          function() { alert('Woof!'); },
+          false);
+        document.getElementById('anImage').addEventListener(
+          'click',
+          function() { alert('Woof again!'); },
+          false);
+      }
+    </script>
+  </head>
+
+  <body>
+    <img src="image.jpg" id="anImage"/>
+  </body>
+</html>

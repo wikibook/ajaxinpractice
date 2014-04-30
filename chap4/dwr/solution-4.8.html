@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>Who's that Customer?</title>
+    <script type='text/javascript'
+      src='/aip.chap4/dwrserver/interface/CustomerFactory.js'>
+    </script>
+    <script type='text/javascript'
+      src='/aip.chap4/dwrserver/engine.js'></script>
+    <script>
+      function lookupByName( form ) {
+        if ((form.firstName.value != '') &&
+             (form.lastName.value != '')) {
+          CustomerFactory.findByName(form.firstName.value,
+                                     form.lastName.value,
+                                     onCustomerFound);
+        }
+      }
+
+      function onCustomerFound( customer ) {
+        if (customer != null) {
+          var form = document.customerForm;
+          form.address.value = customer.address;
+          form.city.value = customer.city;
+          form.state.value = customer.state;
+          form.postalCode.value = customer.postalCode;
+          form.country.value = customer.country;
+        }
+      }
+
+    </script>
+  </head>
+
+  <body>
+    <form name="customerForm" action="/doSomething">
+      <div>
+        <label>First name:</label>
+        <input type="text" name="firstName"
+               onblur="lookupByName(this.form)"/>
+        <label>Last name:</label>
+        <input type="text" name="lastName"
+               onblur="lookupByName(this.form)"/>
+      </div>
+      <div>
+        <label>Address:</label>
+        <input type="text" name="address"/>
+      </div>
+      <div>
+        <label>City:</label>
+        <input type="text" name="city"/>
+        <label>State/Province:</label>
+        <input type="text" name="state"/>
+      </div>
+      <div>
+        <label>Postal Code:</label>
+        <input type="text" name="postalCode"/>
+        <label>Country:</label>
+        <input type="text" name="country"/>
+      </div>
+      <div>
+        <input type="submit" value="OK"/>
+      </div>
+    </form>
+  </body>
+
+</html>

@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Help! I need somebody</title>
+    <script type="text/javascript" src="../prototype.js"></script>
+    <script type="text/javascript" src="HelpConveyer.js"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+        new HelpConveyer(
+          'helpDisplay',
+          document.recipeForm,
+          '/aip.chap10/command/GetHelp',
+          'topic'
+        );
+        document.recipeForm.title.focus();
+      }
+    </script>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <style type="text/css">
+      body {
+        font-size: 8pt;
+      }
+      #formControls {
+        float: left;
+      }
+      #helpContainer {
+        float: left;
+      }
+      #titleField, #sourceField, #ingredientsField, #stepsField {
+        width: 256px;
+      }
+      #maxServingsField,#minServingsField {
+        width: 64px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <fieldset style="width:600px;height:340px;padding-top:16px">
+      <legend>Add a new recipe</legend>
+
+      <div id="formControls">
+        <form name="recipeForm">
+          <div class="line">
+            <label>Title:</label>
+            <input type="text" name="title" id="titleField"/>
+          </div>
+
+          <div class="line">
+            <label>Source:</label>
+            <input type="text" name="source" id="sourceField"/>
+          </div>
+
+          <div class="line">
+            <label>Min Servings:</label>
+            <input type="text" name="minServings"
+                   id="minServingsField" style="float:left"/>
+            <label style="margin-left:32px">Max Servings:</label>
+            <input type="text" name="maxServings"
+                   id="maxServingsField"/>
+          </div>
+
+          <div class="line">
+            <label>Ingredients:</label>
+            <textarea name="ingredients" id="ingredientsField"
+                      rows="4"></textarea>
+          </div>
+
+          <div class="line">
+            <label>Steps:</label>
+            <textarea name="steps" id="stepsField"
+                      rows="4"></textarea>
+          </div>
+
+          <div align="center" id="buttonBar">
+            <input type="button" value="OK" name="okButton"/>
+            <input type="button" value="Cancel" name="cancelButton"/>
+          </div>
+
+        </form>
+      </div>
+
+      <div id="helpContainer">
+        <div id="helpSticky">
+          <div id="helpDisplay">
+          </div>
+        </div>
+      </div>
+
+    </fieldset>
+
+  </body>
+</html>

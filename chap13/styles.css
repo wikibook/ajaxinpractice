@@ -1,0 +1,73 @@
+body {
+  font-family: Arial,Helvetica,sans-serif;
+  padding: 8px;
+  margin: 0px;
+}
+
+#layoutContainer {
+  width: 720px;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 14px;
+}
+
+#tripDescription {
+  margin: 12px;
+  text-align: center;
+  padding: 0px 32px;
+}
+
+#pointsContainer {
+  float: left;
+  border: 2px ridge maroon;
+  background-color: #ffffcc;
+  padding: 8px;
+  width: 200px;
+  height: 480px;
+  overflow: auto;
+}
+
+#pointsContainer a {
+  color: maroon;
+  font-size: 10pt;
+}
+
+#mapContainer {
+  float: right;
+  width: 440px;
+  height: 480px;
+  border: 2px ridge maroon;
+  padding: 8px;
+}
+
+#pointDescription {
+  clear: both;
+  margin: 0px 32px;
+  text-align: center;
+  padding: 16px 32px;
+}
+
+#thumbnailsContainer {
+  clear: both;
+  border: 1px solid black;
+  padding: 8px;
+  height: 100px;
+  overflow: auto;
+  left: 8px;
+  right: 8px;
+}
+
+#thumbnailsContainer img {
+  margin: 4px;
+}
+
+#photoContainer {
+  text-align: center;
+  border: 1px solid black;
+  padding: 8px;
+}

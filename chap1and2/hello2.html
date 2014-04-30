@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>Hello Ajax version 2</title>
+<style type='text/css'>
+* { font-family: Tahoma, Arial, sans-serif; }
+#helloTitle{ color: #48f; }
+</style>
+<script type='text/javascript' src='prototype.js'></script>
+<script type='text/javascript'>
+window.onload=function(){
+  $('helloBtn').onclick=function(){
+    var name=$('helloTxt').value;
+    new Ajax.Request(
+      "hello2.jsp?name="+encodeURI(name),
+      {
+        method:"get",
+        onComplete:function(xhr){
+          $('helloTitle').innerHTML=xhr.responseText;
+        }
+      }
+    );
+  }
+}
+</script>
+</head>
+<body>
+<div id='helloTitle'>
+<h1>Hello, stranger</h1>
+</div>
+<p>Please introduce yourself by entering your name in the box below</p>
+<input type='text' size='24' id='helloTxt'></input>&nbsp;<button id='helloBtn'>Submit</button>
+</body>
+</html>

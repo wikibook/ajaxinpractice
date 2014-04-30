@@ -1,0 +1,71 @@
+<html>
+<head>
+<script src="../json.js"></script>
+<script src="x_core.js"></script>
+<script src="x_dom.js"></script>
+<script src="x_event.js"></script>
+<script src="storage.js"></script>
+
+<script language="javascript">
+storage.onLoad(initialize);
+      
+function initialize() 
+{
+	alert('store is initialized');
+}
+
+function storeState(state)
+{
+	storage.putString('state', null, statusHandler);
+}
+
+function testStateMechanism()
+{
+	state2 = retrieveState();
+	alert(state2.wizard.gw);
+}
+
+function retrieveState()
+{
+	alert(storage.hasKey('state'));
+	return storage.getString('state').parseJSON();
+}
+
+function persistState()
+{
+	state = getState();
+	storeState(state);
+}
+      
+function getState()
+{
+	mainState = new Object();
+	wizardState = new Object();
+
+	mainState.wizard = wizardState;
+
+	wizardState.ip = '192.168.1.6';
+	wizardState.nm = '255.255.255.0';
+	wizardState.gw = '192.168.1.1';
+
+	mainState.userName = 'json';
+	mainState.password = 'nosj15';
+	mainState.style = 'bluesteel';
+	
+	return mainState;
+}
+
+function statusHandler(status) {
+	if (status != Storage.SUCCESS) 
+	{
+		alert(status);
+	}
+}
+
+ 	</script>
+ 	</head>
+ 	<body>
+		<button onclick="persistState();">Store State</button>
+		<button onclick="testStateMechanism();">Test Stored State</button>
+ 	</body>
+</html>

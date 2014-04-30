@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <title>A Poem Lovely As A Tree</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script type='text/javascript' src='scripts/prototype.js'></script>
+    <script type='text/javascript' src='scripts/tree.js'></script>
+    <script type='text/javascript'>
+      window.onload=function(){
+        initTree();
+      }
+    </script>
+  </head>
+  <body>
+    <div class="pane" id="tree">
+      <div class="nodeHeader" id="head_0">Chaos</div>
+      <div class="nodeChildren" id="child_0">
+        <div class="nodeHeader" id="head_1">IFS</div>
+        <div class="nodeChildren" id="child_1">
+          <a href='../assets/images/chaos/ifs/dreamsilk.jpg'>
+            <div class="nodeHeader leaf" id="head_2">Dreamsilk</div>
+          </a>
+          <a href='../assets/images/chaos/ifs/leaf.jpg'>
+            <div class="nodeHeader leaf" id="head_3">Leaf</div>
+          </a>
+          <a href='../assets/images/chaos/ifs/spirochete.jpg'>
+            <div class="nodeHeader leaf" id="head_4">Spirochete</div>
+          </a>
+          <a href='../assets/images/chaos/ifs/trilobite.jpg'>
+            <div class="nodeHeader leaf" id="head_4">Trilobite</div>
+          </a>
+        </div>
+        <div class="nodeHeader" id="head_5">L-systems</div>
+        <div class="nodeChildren" id="child_5">
+          <a href='../assets/images/chaos/ls/bush.jpg'>
+            <div class="nodeHeader leaf" id="head_6">Bush</div>
+          </a>
+          <a href='../assets/images/chaos/ls/weed.jpg'>
+            <div class="nodeHeader leaf" title="ls/weed.jpg" id="head_7">Weed</div>
+          </a>
+        </div>
+        <div class="nodeHeader" id="head_8">Strange Attractors</div>
+        <div class="nodeChildren" id="child_8">
+          <div class="nodeHeader" id="head_8a">2D</div>
+          <div class="nodeChildren" id="child_8a">
+            <a href='../assets/images/chaos/sa/sa2d/deJong.jpg'>
+              <div class="nodeHeader leaf" id="head_9">deJong</div>
+            </a>
+            <a href='../assets/images/chaos/sa/sa2d/lorenzII.jpg'>
+              <div class="nodeHeader leaf" id="head_10">Lorenz</div>
+            </a>
+            <a href='../assets/images/chaos/sa/sa2d/quad.jpg'>
+              <div class="nodeHeader leaf" id="head_11">Poly I</div>
+            </a>
+            <a href='../assets/images/chaos/sa/sa2d/quad2.jpg'>
+              <div class="nodeHeader leaf" id="head_12">Poly II</div>
+            </a>
+          </div>
+          <div class="nodeHeader" id="head_8b">3D</div>
+          <div class="nodeChildren" id="child_8b">
+            <a href='../assets/images/chaos/sa/sa3d/KRTY_240.gif'>
+              <div class="nodeHeader leaf" id="head_13">Poly I</div>
+            </a>
+            <a href='../assets/images/chaos/sa/sa3d/MMDW_240.gif'>
+              <div class="nodeHeader leaf" id="head_14">Poly II</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='pane' id='preview' style='display:none'>
+      <img id='preview_img' src='../assets/images/chaos/ifs/spirochete.jpg'></img>
+    </div>
+  </body>
+</html>

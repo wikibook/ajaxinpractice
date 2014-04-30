@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>Find a Recipe!</title>
+    <script type="text/javascript" src="../prototype.js"></script>
+    <script type="text/javascript">
+      function performSearch() {
+        $('resultsContainer').innerHTML = '';
+        new Ajax.Request(
+          '/aip.chap10/command/SearchForRecipes',
+          {
+            onSuccess: showResults,
+            onFailure: showResults,
+            parameters:
+              $H({
+                terms: $F('searchTermsField')
+              }).toQueryString()
+          }
+        );
+        Element.show('processingNotice');
+      }
+
+      function showResults(request) {
+        Element.hide('processingNotice');
+        $('resultsContainer').innerHTML = request.responseText;
+      }
+    </script>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <style type="text/css">
+      #processingNotice {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        background-color: red;
+        color: white;
+        font-size: 1.2em;
+        width: 320px;
+        text-align: center;
+        padding: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <fieldset>
+      <legend>Find Recipes</legend>
+
+      <form name="searchForm"
+            onsubmit="performSearch();return false;">
+
+        <div>
+          <label>Where recipe title contains: </label>
+          <input type="text" name="searchTerms"
+                 id="searchTermsField"/>
+        </div>
+
+        <div>
+          <input type="submit" value="Search!"/>
+        </div>
+      </form>
+
+      <div id="resultsContainer"></div>
+
+    </fieldset>
+
+    <div id="processingNotice" style="display:none">
+      Searching! Please wait...
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,41 @@
+* {
+  font-family: Tahonma, Arial, sans-serif;
+  font-size: 11px;
+  color: #37a;
+}
+a { text-decoration:none; }
+a:hover { text-decoration: underline; color: #a73;}
+
+.nodeHeader{
+  color: #59f;
+  font-size:1em;
+  cursor: hand;
+}
+
+.nodeChildren{
+  padding: 2px;
+  padding-left: 8px;
+  /*border: solid #777 1px;*/
+}
+
+.pane{
+  position: absolute;
+  background-color: white;
+  border: solid navy 1px;
+}
+
+#tree{
+  top: 48px;
+  left: 20px;
+  width: 180px;
+  height: 320px;
+  padding: 0px;
+}
+
+#preview{
+  top: 48px;
+  left: 204px;
+  width: 320px;
+  height: 320px;
+  padding: 0px;
+}

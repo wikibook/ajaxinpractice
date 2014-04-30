@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Hello Ajax version 4</title>
+<style type='text/css'>
+* { font-family: Tahoma, Arial, sans-serif; }
+#helloTitle{ color: #48f; }
+.sidebar{
+  background-color: #adf;
+  color: navy;
+  border: solid blue 1px;
+  width: 180px;
+  height: 200px;
+  padding: 2px;
+  margin: 3px;
+  float: left;
+}
+</style>
+<script type='text/javascript' src='prototype.js'></script>
+<script type='text/javascript'>
+window.onload=function(){
+  $('helloBtn').onclick=function(){
+    var name=$('helloTxt').value;
+    new Ajax.Request(
+      "hello4.jsp?name="+encodeURI(name),
+      {
+        method:"get",
+        onComplete:function(xhr){
+          eval(xhr.responseText);
+        }
+      }
+    );
+  }
+}
+
+function updateName(name,isLong){
+  $('helloTitle').innerHTML="<h1>Hello, <b><i>"+name+"</i></b></h1>";
+  var listDivId=(isLong) ? 'longNames' : 'shortNames';
+  $(listDivId).innerHTML+=name+"<br/>";
+  alert("Hey, we've got a visitor called '"+name+"' here");
+}
+
+</script>
+</head>
+<body>
+
+<div id='shortNames' class='sidebar'>
+<h5>People I've met with short names</h5><hr/>
+</div>
+<div id='longNames' class='sidebar'>
+<h5>People I've met with long names</h5><hr/>
+</div>
+<div>
+<div id='helloTitle'>
+<h1>Hello, stranger</h1>
+</div>
+<p>Please introduce yourself by entering your name in the box below</p>
+<input type='text' size='24' id='helloTxt'></input>&nbsp;<button id='helloBtn'>Submit</button>
+</body>
+</div>
+</html>

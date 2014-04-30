@@ -1,0 +1,216 @@
+<HTML>
+  <HEAD>
+    <TITLE>Image Browser</TITLE>
+    <SCRIPT type='text/javascript' src='./assets/js/EventHelper.js'></SCRIPT>
+    <SCRIPT type='text/javascript' src='./assets/js/TreeView.js'></SCRIPT>
+    <SCRIPT type='text/javascript' src='./assets/js/dhtmlHistory.js'></SCRIPT>
+  </HEAD>
+  <BODY>
+    <TABLE WIDTH='100%' HEIGHT='100%'>
+      <TR>
+        <TD WIDTH='25%' HEIGHT='5%'>Images</TD>
+        <TD WIDTH='75%' HEIGHT='5%'>CurrentImage</TD>
+      </TR>
+      <TR>
+        <TD WIDTH='25%' HEIGHT='95%'>
+          <DIV STYLE='width:100%;height:100%;' ID='imageBrowser'></DIV>
+        </TD>
+        <TD ID='imgContainer' VALIGN='TOP' ALIGN='LEFT' WIDTH='75%' HEIGHT='95%'>
+          No Image Loaded
+        </TD>
+      </TR>
+    </TABLE>
+  </BODY>
+<SCRIPT LANGUAGE='JavaScript'>
+  <!--
+window.onload = initialize;
+
+var historyChangeRequest;
+
+function sendGETRequest(url,callback)
+{
+    if (window.XMLHttpRequest)
+    {
+        request=new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject)
+    {
+        request=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    request.open("GET", url, true);
+    request.onreadystatechange = callback;
+    request.send(null);
+    
+    return(request);
+}
+
+function getStringifyStateList()
+{
+    var list=getTreeView('imageBrowser').getCurrentState();
+    var stateList='';
+    
+    for(var i=0;i<list.length;i++)
+    {
+        stateList+=list[i].id+','+list[i].isExpanded;
+        stateList+=((i < list.length-1)?(','):(''));
+    }
+    
+    return(stateList);
+}
+
+function HistoryChangeCallback()
+{
+    if(historyChangeRequest != null && 
+       historyChangeRequest.readyState == 4 && 
+       historyChangeRequest.status == 200)
+    {
+        eval(historyChangeRequest.responseText);
+        historyChangeRequest=null;
+
+        if (dhtmlHistory.getCurrentLocation() == null)
+        {
+            dhtmlHistory.add('initial');
+            historyChangeRequest=sendGETRequest(
+                '/servlet/TreeViewHistory?bookmarkId=initial&treeViewState='+
+                getStringifyStateList()+
+                '&imageState=No Image Loaded',
+                null
+            );
+        }
+    }
+}
+
+function initialize()
+{
+    dhtmlHistory.initialize();
+    dhtmlHistory.addListener(handleHistoryChange);
+
+    historyChangeRequest=sendGETRequest(
+        '/servlet/TreeViewHistory',
+        HistoryChangeCallback
+    );
+}
+
+function handleHistoryChange(newLocation,historyData)
+{
+    historyChangeRequest=sendGETRequest(
+        '/servlet/TreeViewHistory?bookmarkId='+newLocation,
+        HistoryChangeCallback
+    );                    
+}
+
+function showImage(image)
+{
+    var imgContainer=document.getElementById('imgContainer');
+
+    if(image == 'No Image Loaded')
+    {
+        imgContainer.innerHTML=image;
+    }
+    else
+    {
+        imgContainer.innerHTML="<IMG SRC='"+image+"'>";
+    }
+}
+                
+function HistoryImageActionHandler()
+{
+    var textColumn;
+    var childrenDiv;
+    var treeViewRef;
+    var nodeId;
+    var treeView;
+
+    this.onClick    =_onClick;
+    this.onMouseOver=_onMouseOver;
+    this.onMouseOut =_onMouseOut;
+    this.onMouseDown=_onMouseDown;
+    this.onMouseUp  =_onMouseUp;
+    
+    function _setProperties(event)
+    {
+        textColumn =eventHelper.getEventTarget(event);
+        childrenDiv=document.getElementById(textColumn.getAttribute('childrenContainer'));
+        treeViewRef=textColumn.getAttribute('container');
+        nodeId     =textColumn.getAttribute('nodeId');
+        
+        treeView=getTreeView(treeViewRef);
+    }
+    
+    function _onClick(event)
+    {
+        _setProperties(event);
+        
+        if(treeView.getNode(nodeId).getAction() != null)
+        {
+            var link =null;
+            var image='No Image Loaded';
+            
+            if(treeView.getNode(nodeId).getAction())
+            {
+                image=treeView.getNode(nodeId).getIcon();
+                showImage(image);
+            }
+
+            var id   ='id_'+new Date().getTime();
+            dhtmlHistory.add(id);
+            
+            sendGETRequest(
+                '/servlet/TreeViewHistory?bookmarkId='+id+
+                '&treeViewState='+getStringifyStateList()+
+                '&imageState='+image,
+                null
+            );
+        }
+    }
+    
+    function _setColor(event,color)
+    {
+        _setProperties(event);
+        
+        if(treeView.getNode(nodeId).getAction())
+        {
+            textColumn.style.color=color;
+        }
+    }
+    
+    function _onMouseOver(event)
+    {
+        _setColor(event,'#00FF00');
+    }
+    
+    function _onMouseOut(event)
+    {
+        _setColor(event,'#0000FF');
+    }
+    
+    function _onMouseDown(event)
+    {
+        _setColor(event,'#FF0000');
+    }
+    
+    function _onMouseUp(event)
+    {
+        _setColor(event,'#00FF00');
+    }
+}
+      
+function HistoryExpandContractHandler(event)
+{
+    var treeViewRef=eventHelper.getEventTarget(event).getAttribute('container');
+
+    DefaultExpandContractHandler(event);
+    
+    var id='id_'+new Date().getTime();
+    dhtmlHistory.add(id);
+    sendGETRequest(
+        '/servlet/TreeViewHistory?bookmarkId='+id+
+        '&treeViewState='+getStringifyStateList()+
+        '&imageState=No Image Loaded',
+        null
+    );
+}
+  //-->
+</SCRIPT>
+</HTML>

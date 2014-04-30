@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <title>Trip-o-matic</title>
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript" src="gus.js"></script>
+    <script type="text/javascript"
+      src="TripomaticDigester.js"></script>
+    <script type="text/javascript"
+      src="http://api.maps.yahoo.com/ajaxymap?v=2.0&appid=YahooDemo">
+    </script>
+    <script type="text/javascript">
+      var tripomatic;
+      var map;
+
+      window.onload = function() { 
+        var tripDoc = document.URL.getQueryParameters().dataUrl;
+        if (tripDoc == null)
+          throw new Error('the dataUrl parameter must be set');
+        tripomatic =  new TripomaticDigester(tripDoc,onLoaded);
+        map = new YMap($( 'mapContainer'));
+        map.addPanControl();
+        map.addZoomLong();
+      }
+
+      function onLoaded() {
+        $('tripTitle').innerHTML = this.title;
+        $('tripDescription').innerHTML = this.description;
+        this.points.each(makePointOfInterest);
+        onShowPoint(0);
+      }
+
+      function makePointOfInterest(point,index) {
+        var pointDiv = document.createElement('div');
+        var anchor = document.createElement('a');
+        anchor.href = 'javascript:onShowPoint(' + index + ')';
+        anchor.appendChild(document.createTextNode(point.name));
+        pointDiv.appendChild(anchor);
+        $('pointsList').appendChild(pointDiv);
+      }
+
+      function onShowPoint(index) {
+        var point = tripomatic.points[index];
+        var geoPoint = new YGeoPoint(point.latitude,
+                                     point.longitude);
+        map.drawZoomAndCenter(geoPoint,4);
+        var marker = new YMarker(geoPoint);
+        marker.addLabel('x');
+        map.addOverlay(marker);
+        YEvent.Capture(marker,
+                       EventsList.MouseClick,
+                       makeThumbnails.bind(point));
+        $('pointDescription').innerHTML = point.description;
+        $('photoContainer').innerHTML = '';
+        $('thumbnailsContainer').innerHTML = '';
+      }
+
+      function makeThumbnails() {
+        var queryString =
+          $H({
+            '.serviceUrl.':
+                'http://www.flickr.com/services/rest/',
+            api_key: tripomatic.flickrKey,
+            method: 'flickr.photosets.getPhotos',
+            photoset_id: this.photoSetId
+          }).toQueryString()
+        new Ajax.Request(
+          '/aip.chap13/proxy',
+          {
+            onSuccess: onPhotosetList,
+            method: 'get',
+            parameters: queryString
+          }
+        );
+      }
+
+      function onPhotosetList( request ) {
+        var doc = request.responseXML;
+        var status =
+          doc.getElementsByTagName('rsp')[0].getAttribute('stat');
+        if (status == 'ok') {
+          var photos = doc.getElementsByTagName('photo');
+          $A(photos).each(makeThumbnail);
+        }
+        else {
+          throw new Error('getPhotos request failed');
+        }
+      }
+
+      function makeThumbnail(photo,index) {
+        var baseUrl = 'http://static.flickr.com/' +
+                      photo.getAttribute('server') + '/' +
+                      photo.getAttribute('id') + '_' +
+                      photo.getAttribute('secret');
+        var thumbUrl = baseUrl + '_t.jpg';
+        var photoUrl = baseUrl + '.jpg';
+        var thumb = document.createElement('img');
+        thumb.src = thumbUrl;
+        thumb.style.cursor = 'pointer';
+        thumb.onclick = showPhoto;
+        thumb.photoUrl = photoUrl;
+        $('thumbnailsContainer').appendChild(thumb);
+      }
+
+      function showPhoto() {
+        var photo = $('photoElement');
+        if (photo == null) {
+          photo = document.createElement('img');
+          photo.id = 'photoElement';
+          $('photoContainer').appendChild(photo);
+        }
+        photo.src = this.photoUrl;
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="layoutContainer">
+      <h1 id="tripTitle"></h1>
+      <div id="tripDescription"></div>
+      <div id="pointsContainer">
+        <h2>Points of interest:</h2>
+        <div id="pointsList"></div>
+      </div>
+      <div id="mapContainer"></div>
+      <div id="pointDescription"></div>
+      <div id="thumbnailsContainer"></div>
+      <div id="photoContainer"></div>
+    </div>
+  </body>
+
+</html>

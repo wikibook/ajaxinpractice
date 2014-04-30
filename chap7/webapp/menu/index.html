@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>Chaotic Images</title>
+<link rel="stylesheet" type="text/css" href="menu.css">
+<SCRIPT type='text/javascript' src='../assets/js/jQuery.js'></SCRIPT>
+<SCRIPT type='text/javascript'>
+  function startList() {
+    if ($.browser.msie) {
+      $("#nav > li").each(
+        function(index, node){
+          $(node).hover(
+            function() {
+              $(this).addClass("over");
+            },
+            function() {
+              $(this).removeClass("over");
+            }
+          );
+        }
+      );
+    }
+  }
+
+  function invokeLink(url){
+    $('#content_area').load(url);
+  }
+
+  $(startList);
+</SCRIPT>
+<style type="text/css">
+@import "style2.css";
+</style>
+</head>
+<body>
+
+  <TABLE WIDTH='100%'>
+    <TR>
+      <TD WIDTH='25%'>Images</TD>
+      <TD WIDTH='75%'>Current Image</TD>
+    </TR>
+    <TR>
+      <TD VALIGN='TOP'>
+        <ul id="nav">
+          <li><a href="#">IFS</a>
+            <ul>
+              <li><a href="javascript:invokeLink('dreamsilk.html')">Dreamsilk</a></li>
+              <li><a href="javascript:invokeLink('leaf.html')">Leaf</a></li>
+              <li><a href="javascript:invokeLink('spirochete.html')">Spirochete</a></li>
+              <li><a href="javascript:invokeLink('trilobite.html')">Trilobite</a></li>
+            </ul>
+          </li>
+          <li><a href="#">L-Systems</a>
+            <ul>
+              <li><a href="javascript:invokeLink('bush.html')">Bush</a></li>
+              <li><a href="javascript:invokeLink('weed.html')">Weed</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </TD>
+      <TD VALIGN='TOP' ID='content_area'>
+        <BR><BR>
+        Click on an image to the left to view it.
+      </TD>
+    </TR>
+  </TABLE>
+</BODY>
+</HTML>

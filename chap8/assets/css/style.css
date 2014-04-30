@@ -1,0 +1,145 @@
+input.text, input.button{
+ font-family: Courier New, serif;
+ background-color: #D8D8D8;
+ color: #202020;
+ border: 1px solid #303030;
+ font-size: 12px;
+ height:24px;
+}
+
+input.text{
+ background-color: #E0E0E0;
+}
+
+input.button {
+ width: 125px;
+ border: 2px solid #303030;
+}
+
+
+
+
+
+
+font, font.label, font.small, font.alert, font.small_alert, font.small_label, a, a.small, p {
+ font-family: Courier New, serif;
+ font-size: 12px;
+ color: #202020;
+}
+
+font.label {
+ font-weight: bold;
+}
+
+font.alert, font.small_alert {
+ color: #FF0000;
+}
+
+font.small_label {
+ color: #FF0000;
+}
+
+font.small, font.small_label, font.small_alert, a.small {
+ font-size: 11px;
+}
+
+
+th.main {
+ font-family: Courier New, serif;
+ color: #202020;
+ font-size: 16px;
+ font-weight: bold;
+}
+
+td.main {
+
+}
+
+
+table.palette {
+ border: 2px solid #303030;
+ border-collapse: collapse;
+ width:100%;
+}
+
+tr.paletteNormal, tr.paletteHighlight, tr.paletteSelected, tr.paletteDisabled {
+ border: 2px solid #303030;
+ border-collapse: collapse;
+}
+
+tr.paletteHighlight {
+ background-color:#FFFF80;
+}
+
+tr.paletteSelected {
+ background-color:#FF8080;
+}
+
+tr.paletteDisabled {
+ background-color:#C0C0C0;
+}
+
+th.palette {
+ font-family: Courier New, serif;
+ color: #202020;
+ font-size: 16px;
+ font-weight: bold;
+}
+
+
+td.paletteContent, td.paletteImage, td.paletteLabel, td.paletteText {
+ vertical-align:top;
+}
+
+td.paletteImage {
+ width:48px;
+}
+
+td.paletteLabel {
+ font-family: Courier New, serif;
+ color: #202020;
+ font-size: 12px;
+ font-weight: bold;
+}
+
+td.paletteText {
+ font-family: Courier New, serif;
+ color: #202020;
+ font-size: 12px;
+}
+
+
+p {
+ text-indent: 10pt;
+ letter-spacing: 1pt;
+ line-height: 14pt;
+}
+
+
+
+a, a.small, img {
+ color: #FF7700;
+ text-decoration: none;
+}
+
+a, a.small:link, img:link {
+ color: #FF7700;
+ text-decoration: none;
+}
+
+a, a.small:visited, img:visited {
+ color: #FF7700;
+ text-decoration: none;
+}
+
+a, a.small:hover, img:hover {
+ color: #D32800;
+ text-decoration: none;
+ font-weight: bold;
+}
+
+a, a.small:active, img:active {
+ color: #D32800;
+ text-decoration: none;
+ font-weight: bold;
+}

@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Phone Number Lookup with Dojo</title>
+    <script type="text/javascript" src="dojo.js"></script>
+    <script type="text/javascript">
+      function lookup() {
+        dojo.io.bind(
+          {
+            url: 'phone.jsp',
+            mimetype: "text/plain",
+            load:
+              function(type, data, req) {
+                document.getElementById('displayArea').innerHTML = data;
+              },
+            formNode: document.lookupForm
+          }
+        );
+      }
+    </script>
+  </head>
+
+  <body>
+    <form name="lookupForm" onsubmit="return false;">
+      <select name="who" onchange="lookup()">
+        <option value="JOHN">John</option>
+        <option value="MARY">Mary</option>
+        <option value="BILL">Bill</option>
+      </select>
+    </form>
+    <div>
+      Phone # is: <span id="displayArea"/>
+    </div>
+  </body>
+
+</html>

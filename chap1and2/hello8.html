@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>Hello Ajax version 8</title>
+<style type='text/css'>
+* { font-family: Tahoma, Arial, sans-serif; }
+#helloTitle{ color: #48f; }
+.sidebar{
+  background-color: #adf;
+  color: navy;
+  border: solid blue 1px;
+  width: 180px;
+  height: 200px;
+  padding: 2px;
+  margin: 3px;
+  float: left;
+}
+</style>
+<script type='text/javascript' src='prototype_v131.js'></script>
+<script type='text/javascript' src='ws.js'></script>
+<script type='text/javascript'>
+
+window.onload=function(){
+  $('helloBtn').onclick=function(){
+    var name=$('helloTxt').value;
+    var wsNamespace='../axis/HelloWorld.jws';
+    var wsCall=new WS.Call(wsNamespace);
+    var rpcFunction=new WS.QName('getInfo',wsNamespace);
+    wsCall.invoke_rpc(
+      rpcFunction,
+      [{name:'name',value:name}],
+      null,
+      function(call,envelope){
+        var soapBody=envelope.get_body();
+        var soapMap=soapBody.get_all_children()[1].asElement();
+        var itemNodes=soapMap.getElementsByTagName('item');
+        var initial="";
+        var likes=[];
+        for (var i=0;i<itemNodes.length;i++){
+          var itemNode=itemNodes[i];
+          var key=itemNode.getElementsByTagName('key')[0].firstChild.data;
+          if (key=='initial'){
+            initial=itemNode.getElementsByTagName('value')[0].firstChild.data;
+          }else if (key=='likes'){
+            var likeNodes=itemNode.getElementsByTagName('value')[0].getElementsByTagName('value');
+            for (var j=0;j<likeNodes.length;j++){
+              likes[likes.length]=likeNodes[j].firstChild.data;
+            }
+          }
+        }
+        update(initial,likes);
+      }
+    );
+  }
+}
+
+
+function update(initial,likes){
+  var content='<h5>'+initial+' likes...</h5><hr/>';
+  for (var i=0;i<likes.length;i++){
+    content+=likes[i]+'<br/>';
+  }
+  $('likesList').innerHTML=content;
+}
+
+</script>
+</head>
+<body>
+
+<div id='likesList' class='sidebar'>
+<h5>Likes</h5><hr/>
+</div>
+<div>
+<div id='helloTitle'>
+<h1>Hello, stranger</h1>
+</div>
+<p>Please introduce yourself by entering your name in the box below</p>
+<input type='text' size='24' id='helloTxt'></input>&nbsp;<button id='helloBtn'>Submit</button>
+</body>
+</div>
+</html>

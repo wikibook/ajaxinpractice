@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Instrumented Google Search</title>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript" src="SearchInstrumenter.js"></script>
+    <script type="text/javascript">
+      window.onload = function () {
+        new SearchInstrumenter();
+      }
+    </script>
+    <style type="text/css">
+      abbr {
+        color: green;
+        font-weight: bold;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      #resultsContainer {
+        border: 2px ridge maroon;
+        background-color: #ffffcc;
+        padding: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div>
+      <p>
+        I find that the accumulation of <abbr>stratocumulus</abbr>
+        and absence of <abbr>solar radiation</abbr> presages an
+        increased rate of <abbr>condensation</abbr>. We may expect
+        vertical <abbr>precipitation</abbr> of moisture at any
+        time.
+      </p>
+    </div>
+
+    <div id="resultsContainer"></div>
+
+  </body>
+
+</html>

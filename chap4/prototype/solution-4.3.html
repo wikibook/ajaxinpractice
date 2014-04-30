@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>T-shirts!</title>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script>
+      function updateSizes() {
+        if ($F('color')=='') return;
+        new Ajax.Request('getSizes.jsp?color=' + $F('color'),
+          {
+            method: 'get',
+            onSuccess: populateSizes,
+            onFailure: function(r) {
+              throw new Error( 'Updates sizes failed: ' + r.statusText );
+            }
+          }
+        );
+      }
+
+      function populateSizes(r) {
+        eval('var sizes=' + r.responseText);
+        var sizeElement = $('size');
+        while (sizeElement.options.length > 1) sizeElement.remove(1);
+        for (var n = 0; n < sizes.length; n++) {
+          sizeElement.add(new Option( sizes[n],sizes[n]), document.all ? 0 : null );
+        }
+        sizeElement.disabled = false;
+      }
+    </script>
+  </head>
+
+  <body>
+    <form action="/submitOrder" name="tshirtForm">
+      <label>T-shirt color: </label>
+      <select name="color" id="color" onchange="updateSizes()">
+        <option value="">Select color</option>
+        <option value="cardinal">Cardinal</option>
+        <option value="ecru">Ecru</option>
+        <option value="hunter">Hunter</option>
+        <option value="azure">Azure</option>
+      </select>
+      <label>Size:</label>
+      <select name="size" id="size" disabled="disabled">
+        <option value="">Select size</option>
+      </select>
+      <input type="submit"/>
+    </form>
+  </body>
+
+</html>

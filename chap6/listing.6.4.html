@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>Listing 6.4</title>
+    <script type="text/javascript"
+            src="prototype-1.5.1.js"></script>
+    <script type="text/javascript"
+            src="listing.6.5.js"></script>
+    <script type="text/javascript">
+      var framework = new ValidatorFramework();
+      var xref1;
+      var xref2;
+
+      window.onload = function() {
+        Event.observe('testForm','submit',function(event) {
+          if (!framework.validateForm(event.target))
+            Event.stop(event);
+        });
+        Event.observe('testForm','keyup',function(event) {
+          framework.validateForm(event.target.form);
+        });
+        xref1 =
+          new DateRangeCrossValidator(
+            framework,
+            new Array($('start'),$('end')),$('startend_err'));
+        xref2 =
+          new DateRangeCrossValidator(
+            framework,
+            new Array($('start2'),$('end2')),$('startend_err2'));
+      }
+    </script>
+    <style type="text/css">
+      div.error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="testForm"
+          method="post"
+          action="/aip.chap6/requestInspector">
+      <div id="startend_err"
+           class="error"></div>
+      <div> Start Date :
+        <input name="start" type="text"
+               id="start" valid="date"
+               error="start_err"/>
+        <div class="error" id="start_err">
+        </div>
+      </div>
+      <div> End Date :
+        <input name="end" type="text"
+               id="end" valid="date"
+               error="end_err"/>
+        <div class="error" id="end_err"></div>
+      </div>
+
+      <div id="startend_err2"
+           class="error"></div>
+      <div> Start Date :
+        <input name="start2" type="text" id="start2" valid="date"
+               error="start_err2"/>
+        <div class="error" id="start_err2"></div> </div>
+      <div> End Date :
+        <input name="end2" type="text" id="end2" valid="date"
+               error="end_err2"/>
+        <div class="error" id="end_err2"></div>
+      </div>
+      <div>
+        <input type="submit"/>
+      </div>
+    </form>
+
+  </body>
+</html>

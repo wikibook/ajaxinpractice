@@ -1,0 +1,44 @@
+<html>
+<head>
+<script src="../json.js"></script>
+<script src="../prototype-1.4.0.js"></script>
+<script src="listing.11.7.js"></script>
+</head>
+<body>
+	
+	<button onClick="previous();">Previous</button>
+	<button onClick="next();">Next</button>
+	
+	<div id="customers"></div>
+
+	<script>
+	var totalCustomers = 100;
+	var currentCustomerIndex = 0;
+	var pageSize = 11;
+	
+	var manager = new CustomerManager();
+	
+	function previous()
+	{
+		currentCustomerIndex -= pageSize ; 
+		if(currentCustomerIndex < 0)
+		{
+			currentCustomerIndex = 0;
+		}
+		manager.getCustomerData(currentCustomerIndex, pageSize, $('customers'));
+	}
+	
+	function next()
+	{
+		currentCustomerIndex += pageSize; 
+		if(currentCustomerIndex >= totalCustomers)
+		{
+			currentCustomerIndex -= pageSize;
+		}
+		manager.getCustomerData(currentCustomerIndex, pageSize, $('customers'));
+	}
+	
+	manager.getCustomerData(currentCustomerIndex, pageSize, $('customers'));
+	</script>
+</body>
+</html>

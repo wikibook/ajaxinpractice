@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+
+<faces-config>
+
+    <managed-bean>
+      <managed-bean-name>dndBean</managed-bean-name>
+      <managed-bean-class>aip.DragDropBean</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+      <managed-bean-name>craneItem</managed-bean-name>
+      <managed-bean-class>aip.ShoppingItem</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>hoverMessage</property-name>
+            <value>Good choice.</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dropMessage</property-name>
+            <value> Thank you for your purchase.</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dragOptions</property-name>
+            <value></value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+      <managed-bean-name>blackItem</managed-bean-name>
+      <managed-bean-class>aip.ShoppingItem</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>hoverMessage</property-name>
+            <value>Excellent selection.</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dropMessage</property-name>
+            <value>You are sure to enjoy.</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dragOptions</property-name>
+            <value></value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+      <managed-bean-name>rockItem</managed-bean-name>
+      <managed-bean-class>aip.ShoppingItem</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>hoverMessage</property-name>
+            <value>Put it back.</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dropMessage</property-name>
+            <value>You really don't want this one.</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dragOptions</property-name>
+            <value>revert</value>
+        </managed-property>
+    </managed-bean>
+
+</faces-config>

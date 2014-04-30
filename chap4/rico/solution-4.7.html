@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>What's for dinner?</title>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript" src="rico.js"></script>
+    <script type="text/javascript" src="ItemListManager.js"></script>
+    <script>
+      window.onload = function() {
+        ajaxEngine.registerRequest('fetchItemData','fetchItem.jsp');
+        ajaxEngine.registerRequest('fetchItemList','fetchItemList.jsp');
+        ajaxEngine.registerAjaxElement('itemData');
+        ajaxEngine.registerAjaxObject('itemListManager',
+                                      new ItemListManager($('items')));
+        ajaxEngine.sendRequest( 'fetchItemList' );
+      }
+
+      function showInfo( select ) {
+        ajaxEngine.sendRequest( 'fetchItemData', 'id='+select.value );
+      }
+    </script>
+  </head>
+
+  <body>
+    <form style="float:left">
+      <select name="items" id="items" size="6" onchange="showInfo(this)">
+      </select>
+    </form>
+
+    <div id="itemData" style="float:left"></div>
+  </body>
+
+</html>

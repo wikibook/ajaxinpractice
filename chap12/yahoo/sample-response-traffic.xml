@@ -1,0 +1,67 @@
+<ResultSet xsi:schemaLocation="urn:yahoo:maps http://api.local.yahoo.com/MapsService/V1/TrafficDataResponse.xsd">
+<LastUpdateDate>1144350730</LastUpdateDate>
+
+<Result type="incident">
+<Title>Incident, on E OLTORF ST at BENJAMIN ST</Title>
+<Description>COLLISION PRIVATE PROPERTY J</Description>
+<Latitude>30.231270</Latitude>
+<Longitude>-97.734753</Longitude>
+<Direction>N/A</Direction>
+<Severity>3</Severity>
+<ReportDate>1144350420</ReportDate>
+<UpdateDate>1144350705</UpdateDate>
+<EndDate>1144352505</EndDate>
+</Result>
+
+<Result type="incident">
+<Title>Incident, on LA VISTA ST at HAVANA ST</Title>
+<Description>COLLISION LEAVING THE SCENE</Description>
+<Latitude>30.232819</Latitude>
+<Longitude>-97.759331</Longitude>
+<Direction>N/A</Direction>
+<Severity>3</Severity>
+<ReportDate>1144349700</ReportDate>
+<UpdateDate>1144350106</UpdateDate>
+<EndDate>1144351907</EndDate>
+</Result>
+
+<Result type="incident">
+<Title>Incident, on I-35 at E RIVERSIDE DR</Title>
+<Description>COLLISION BLOCKING</Description>
+<Latitude>30.254595</Latitude>
+<Longitude>-97.736988</Longitude>
+<Direction>NB</Direction>
+<Severity>3</Severity>
+<ReportDate>1144350420</ReportDate>
+<UpdateDate>1144350705</UpdateDate>
+<EndDate>1144352505</EndDate>
+</Result>
+
+<Result type="incident">
+<Title>Incident, on W 6TH ST at MO-PAC</Title>
+<Description>STALLED VEHICLE P</Description>
+<Latitude>30.275956</Latitude>
+<Longitude>-97.764793</Longitude>
+<Direction>N/A</Direction>
+<Severity>3</Severity>
+<ReportDate>1144349340</ReportDate>
+<UpdateDate>1144349806</UpdateDate>
+<EndDate>1144351607</EndDate>
+</Result>
+
+<Result type="incident">
+<Title>Lane closed, on FM-969 at US-183</Title>
+
+	<Description>
+The outside lanes will be closed from 9a 4p Monday through Saturday.
+</Description>
+<Latitude>30.285706</Latitude>
+<Longitude>-97.665619</Longitude>
+<Direction>EB</Direction>
+<Severity>2</Severity>
+<ReportDate>1144332000</ReportDate>
+<UpdateDate>1144331940</UpdateDate>
+<EndDate>1144357200</EndDate>
+</Result>
+</ResultSet>
+        

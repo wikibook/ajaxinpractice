@@ -1,0 +1,129 @@
+<html>
+  <head>
+    <title>What's Going On?</title>
+    <script type="text/javascript"
+            src="http://api.maps.yahoo.com/ajaxymap?v=2.0&appid=YahooDemo">
+    </script>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript">
+      var map;
+
+      window.onload = function() {
+        map = new YMap($('theMap'));
+        map.addPanControl();
+        map.addZoomLong();
+      }
+
+      function showMap() {
+        var zoomLevel = 4;
+        var latitude = document.mapForm.latitude.value;
+        var longitude = document.mapForm.longitude.value;
+        var point = new YGeoPoint( latitude, longitude );
+        map.drawZoomAndCenter( point, zoomLevel );
+        $('trafficButton').disabled = false;
+      }
+
+      function findLocation() {
+        new Ajax.Request(
+          '/aip.chap12/proxy',
+          {
+            method: 'get',
+            parameters:
+              $H(
+                {
+                  '.serviceUrl.':
+                     'http://api.local.yahoo.com/MapsService/V1/geocode',
+                  appid: 'org.bibeault.aip',
+                  location: $F('locationField')
+                }
+              ).toQueryString(),
+            onSuccess: onCoordsObtained
+          }
+        );
+      }
+
+      function onCoordsObtained(request) {
+        var xml = request.responseXML;
+        document.mapForm.latitude.value =
+          xml.getElementsByTagName( 'Latitude' ).item(0).firstChild.data;
+        document.mapForm.longitude.value =
+          xml.getElementsByTagName( 'Longitude' ).item(0).firstChild.data;
+        showMap();
+      }
+
+      function showTraffic() {
+        new Ajax.Request(
+          '/aip.chap12/proxy',
+          {
+            method: 'get',
+            parameters:
+              $H(
+                {
+                  '.serviceUrl.':
+                     'http://api.local.yahoo.com/MapsService/V1/trafficData',
+                  appid: 'org.bibeault.aip',
+                  latitude: $F('latitudeField'),
+                  longitude: $F('longitudeField')
+                }
+              ).toQueryString(),
+            onSuccess: onTrafficObtained
+          }
+        );
+      }
+
+      function onTrafficObtained(request) {
+        var xml = request.responseXML;
+        var results = $A(xml.getElementsByTagName('Result'));
+        var incidents = new Array();
+        results.each(
+          function(result) {
+            incidents.push(
+              result.getElementsByTagName('Title').item(0).firstChild.data
+            );
+          }
+        )
+        if (incidents.length == 0)
+          incidents[0] = 'No incidents to report.';
+        incidents.each(
+          function(item) {
+            $('trafficAlerts').innerHTML += item + '<br/>';
+          }
+        );
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <div>
+      <form name="geoForm" onsubmit="findLocation();return false">
+        Location: <input type="text" id="locationField"
+                         name="location" style="width:200px"/>
+        <input type="submit"/>
+      </form>
+    </div>
+
+    <div>
+      <form name="mapForm" onsubmit="showMap();return false;">
+        Latitude: <input type="text" id="latitudeField"
+                         name="latitude"/>
+        Longitude: <input type="text" id="longitudeField"
+                          name="longitude"/>
+        <input type="submit"/>
+      </form>
+    </div>
+
+    <div id="theMap" style="width:600px;height:480px"></div>
+
+    <div>
+      <form name="trafficForm" onsubmit="showTraffic();return false;">
+          <input type="submit" id="trafficButton"
+                 value="Show Traffic Alerts" disabled="disabled"/>
+      </form>
+    </div>
+
+    <div id="trafficAlerts"></div>
+
+  </body>
+
+</html>

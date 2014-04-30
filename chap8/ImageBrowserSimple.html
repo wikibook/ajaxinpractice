@@ -1,0 +1,147 @@
+<HTML>
+  <HEAD>
+    <TITLE>Image Browser</TITLE>
+    <SCRIPT type='text/javascript' src='./assets/js/EventHelper.js'></SCRIPT>
+    <SCRIPT type='text/javascript' src='./assets/js/TreeView.js'></SCRIPT>
+    <SCRIPT type='text/javascript' src='./assets/js/dhtmlHistory.js'></SCRIPT>
+  </HEAD>
+  <BODY>
+    <TABLE WIDTH='100%' HEIGHT='100%'>
+      <TR>
+        <TD WIDTH='25%' HEIGHT='5%'>Images</TD>
+        <TD WIDTH='75%' HEIGHT='5%'>CurrentImage</TD>
+      </TR>
+      <TR>
+        <TD WIDTH='25%' HEIGHT='95%'>
+          <DIV STYLE='width:100%;height:100%;' ID='imageBrowser'></DIV>
+        </TD>
+        <TD ID='imgContainer' VALIGN='TOP' ALIGN='LEFT' WIDTH='75%' HEIGHT='95%'>
+          No Image Loaded
+        </TD>
+      </TR>
+    </TABLE>
+  </BODY>
+<SCRIPT LANGUAGE='JavaScript'>
+  <!--
+window.onload = initTreeView;
+
+function showImage(image)
+{
+    var imgContainer=document.getElementById('imgContainer');
+    
+    if(image == 'No Image Loaded')
+    {
+        imgContainer.innerHTML=image;
+    }
+    else
+    {
+        imgContainer.innerHTML="<IMG SRC='"+image+"'>";
+    }
+}
+
+function ImageActionHandler()
+{
+    var textColumn;
+    var childrenDiv;
+    var treeViewRef;
+    var nodeId;
+
+    this.onClick    =_onClick;
+    this.onMouseOver=_onMouseOver;
+    this.onMouseOut =_onMouseOut;
+    this.onMouseDown=_onMouseDown;
+    this.onMouseUp  =_onMouseUp;
+    
+    function _setProperties(event)
+    {
+        textColumn =eventHelper.getEventTarget(event);
+        childrenDiv=document.getElementById(textColumn.getAttribute('childrenContainer'));
+        treeViewRef=textColumn.getAttribute('container');
+        nodeId     =textColumn.getAttribute('nodeId');
+        
+        treeView=getTreeView(treeViewRef);
+    }
+    
+    function _onClick(event)
+    {
+        _setProperties(event);
+        
+        if(treeView.getNode(nodeId).getAction() != null)
+        {
+            var link  =null;
+            var image ='No Image Loaded';
+            
+            if(treeView.getNode(nodeId).getAction())
+            {
+                image=treeView.getNode(nodeId).getIcon()
+                 showImage(image);
+            }
+        }
+    }
+    
+    function _setColor(event,color)
+    {
+        _setProperties(event);
+        
+        if(treeView.getNode(nodeId).getAction())
+        {
+            textColumn.style.color=color;
+        }
+    }
+    
+    function _onMouseOver(event)
+    {
+        _setColor(event,'#00FF00');
+    }
+    
+    function _onMouseOut(event)
+    {
+        _setColor(event,'#0000FF');
+    }
+    
+    function _onMouseDown(event)
+    {
+        _setColor(event,'#FF0000');
+    }
+    
+    function _onMouseUp(event)
+    {
+        _setColor(event,'#00FF00');
+    }
+}
+  
+
+function initTreeView()
+{
+    new TreeView('imageBrowser');
+    getTreeView('imageBrowser').registerActionHandler(new ImageActionHandler());
+
+    getTreeView('imageBrowser').addNode(new TreeViewNode('root','Chaos',            './assets/images/nodes/p.png',false,false,null));
+    
+    getTreeView('imageBrowser').addNode(new TreeViewNode('ifs', 'IFS',             './assets/images/nodes/p.png',false,false,'root'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('ds',  'Dreamsilk',        './assets/images/chaos/ifs/dreamsilk.jpg',true,false,'ifs'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('lf',  'Leaf',             './assets/images/chaos/ifs/leaf.jpg',true,false,'ifs'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('sp',  'Spirochete',       './assets/images/chaos/ifs/spirochete.jpg',true,false,'ifs'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('tr',  'Trilobite',        './assets/images/chaos/ifs/trilobite.jpg',true,false,'ifs'));
+    
+    getTreeView('imageBrowser').addNode(new TreeViewNode('ls',  'L-System',         './assets/images/nodes/p.png',false,false,'root'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('bush','Bush',             './assets/images/chaos/ls/bush.jpg',true,false,'ls'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('weed','Weed',             './assets/images/chaos/ls/weed.jpg',true,false,'ls'));
+
+    getTreeView('imageBrowser').addNode(new TreeViewNode('sa',  'Strange Attractor','./assets/images/nodes/p.png',false,false,'root'));
+
+    getTreeView('imageBrowser').addNode(new TreeViewNode('sa2d','2D',               './assets/images/nodes/p.png',false,false,'sa'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('dj',  'deJong',           './assets/images/chaos/sa/sa2d/deJong.jpg',true,false,'sa2d'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('lor', 'Lorenz',           './assets/images/chaos/sa/sa2d/lorenzII.jpg',true,false,'sa2d'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('q1',  'Poly I',           './assets/images/chaos/sa/sa2d/quad.jpg',true,false,'sa2d'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('q2',  'Poly II',          './assets/images/chaos/sa/sa2d/quad2.jpg',true,false,'sa2d'));
+
+    getTreeView('imageBrowser').addNode(new TreeViewNode('sa3d','3D',               './assets/images/nodes/p.png',false,false,'sa'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('p1',  'Poly I',           './assets/images/chaos/sa/sa3d/KRTYCFPFLTLSMOKRPEKMGPQHMUQYGY_240.gif',true,false,'sa3d'));
+    getTreeView('imageBrowser').addNode(new TreeViewNode('p2',  'Poly II',          './assets/images/chaos/sa/sa3d/MMDWQSXMGKLLEFJOCOIQGWKTGGOSRW_240.gif',true,false,'sa3d'));
+
+    getTreeView('imageBrowser').render();
+}
+  //-->
+</SCRIPT>
+</HTML>

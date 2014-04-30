@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+
+  <display-name>Ajax In Practice: Chapter 11 Examples</display-name>
+
+  <servlet>
+    <servlet-name>DWRServlet</servlet-name>
+    <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
+    <servlet-name>SlowServlet</servlet-name>
+    <servlet-class>org.bibeault.aip.usability.SlowServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>CommandBroker</servlet-name>
+    <servlet-class>org.bibeault.aip.usability.CommandBroker</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DWRServlet</servlet-name>
+    <url-pattern>/dwrserver/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SlowServlet</servlet-name>
+    <url-pattern>/slow</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CommandBroker</servlet-name>
+    <url-pattern>/command/*</url-pattern>
+  </servlet-mapping>
+
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <include-prelude>/prelude.jspf</include-prelude>
+    </jsp-property-group>
+  </jsp-config>
+
+</web-app>

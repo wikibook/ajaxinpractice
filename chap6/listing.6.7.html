@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Listing 6.7</title>
+    <script type="text/javascript">
+      window.onload = function () {
+        var data = "This is just some data.";
+        var url = "/aip.chap6/postServlet";
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            alert('Done with the POST. We sent ' + data.length +
+                  ' bytes.');
+            alert('Server message:' + xhr.responseText);
+          }
+          else if (xhr.readyState == 4) {
+            alert('Error posting. Server status: ' + xhr.status);
+          }
+        };
+        xhr.open('POST',url,true);
+        xhr.setRequestHeader(
+          "Content-Type", "whatever");
+        xhr.setRequestHeader(
+          "Content-Length",data.length);
+        xhr.setRequestHeader(
+          "Connection", "close");
+        xhr.send(data);
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

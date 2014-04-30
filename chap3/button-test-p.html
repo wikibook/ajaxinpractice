@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <title>Button Test</title>
+    <script type="text/javascript" src="scripts/prototype.js"></script>
+    <script type="text/javascript" src="ButtonP.js"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+        window.testButton = new Button(
+          'testButton',
+          {
+           onClick: onClicked
+          });
+      }
+
+      function onClicked() {
+        alert('Button ' + this.element.id + ' has been clicked');
+      }
+
+      function toggleButtonState() {
+        if (window.testButton.isEnabled()) {
+          window.testButton.disable();
+        }
+        else {
+          window.testButton.enable();
+        }
+      }
+    </script>
+    <style type="text/css">
+      #testButton { margin: 64px;
+        padding: 3px 6px;
+        font-size: 1.1em;
+        border-width: 3px;
+      }
+      .buttonEnabled {
+        background-color: maroon;
+        border-color: maroon;
+        color: white;
+        border-style: outset;
+      }
+      .buttonDisabled {
+        background-color: #999999;
+        border-color: #999999;
+        color: white;
+        border-style: outset;
+      }
+      .buttonArmed {
+        background-color: maroon;
+        border-color: maroon;
+        color: orange;
+        border-style: outset;
+      }
+      .buttonPressed {
+        background-color: #660000;
+        border-color: maroon;
+        color: orange;
+        border-style: inset;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <button type="button" id="testButton">Click me!</button>
+
+    <div style="margin-top:16px">
+      <input type="checkbox" onclick="toggleButtonState()">
+      Disable button
+    </div>
+
+  </body>
+
+</html>

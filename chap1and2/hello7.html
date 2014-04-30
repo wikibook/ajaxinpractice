@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Hello Ajax version 7</title>
+<style type='text/css'>
+* { font-family: Tahoma, Arial, sans-serif; }
+#helloTitle{ color: #48f; }
+.sidebar{
+  background-color: #adf;
+  color: navy;
+  border: solid blue 1px;
+  width: 180px;
+  height: 200px;
+  padding: 2px;
+  margin: 3px;
+  float: left;
+}
+</style>
+<script type='text/javascript' src='sarissa.js'></script>
+<script type='text/javascript' src='sarissa_ieemu_xpath.js'></script>
+<script type='text/javascript' src='sarissa_dhtml.js'></script>
+<script type='text/javascript'>
+
+var xslDoc=null;
+
+window.onload=function(){
+
+  xslDoc=Sarissa.getDomDocument();
+  xslDoc.load("recipe.xsl");
+
+  document.getElementById('helloBtn').onclick=function(){
+    var name=document.getElementById('helloTxt').value;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "hello7.jsp?name="+encodeURI(name),true);
+    xhr.onreadystatechange=function(){
+      if (xhr.readyState==4){
+        update(xhr.responseXML);
+      };
+    };
+    xhr.send("");
+  }
+}
+
+function update(doc){
+  var initial=doc.selectSingleNode('/person/@initial').value;
+  var name=doc.selectSingleNode('/person/name/text()').nodeValue;
+  document.getElementById('helloTitle').innerHTML="<h1>Hello, <b><i>"+name+"</i></b></h1>";
+
+  var likesList=doc.selectNodes('/person/likes/item');
+  var likes=[];
+  for (var i=0;i<likesList.length;i++){
+    var itemNode=likesList[i];
+    likes[likes.length]=itemNode.firstChild.data;
+  }
+  var likesHTML='<h5>'+initial+' likes...</h5><hr/>';
+  for (var i=0;i<likes.length;i++){
+    likesHTML+=likes[i]+"<br/>";
+  }
+  document.getElementById('likesList').innerHTML=likesHTML;
+
+  var personNode=doc.selectSingleNode('/person');
+  var xsltproc=new XSLTProcessor();
+
+  xsltproc.importStylesheet(xslDoc);
+  Sarissa.updateContentFromNode(personNode,document.getElementById('ingrList'),xsltproc);
+}
+
+</script>
+</head>
+<body>
+
+<div id='likesList' class='sidebar'>
+<h5>Likes</h5><hr/>
+</div>
+<div id='ingrList' class='sidebar'>
+<h5>Ingredients</h5><hr/>
+</div>
+<div>
+<div id='helloTitle'>
+<h1>Hello, stranger</h1>
+</div>
+<p>Please introduce yourself by entering your name in the box below</p>
+<input type='text' size='24' id='helloTxt'></input>&nbsp;<button id='helloBtn'>Submit</button>
+</body>
+</div>
+</html>

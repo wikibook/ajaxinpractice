@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Ch-ch-changes</title>
+    <script type="text/javascript" src="prototype-1.5.1.js">
+    </script>
+    <script type="text/javascript">
+      window.onload = function() {
+        Event.observe('nameField', 'blur', react);
+        Event.observe('nameField', 'focus', react);
+        Event.observe('nameField', 'change', react);
+        Event.observe('breedField', 'blur', react);
+        Event.observe('breedField', 'focus', react);
+        Event.observe('breedField', 'change', react);
+        Event.observe('dobField', 'blur', react);
+        Event.observe('dobField', 'focus', react);
+        Event.observe('dobField', 'change', react);
+        $('nameField').focus();
+      }
+
+      function react(event) {
+        $('info').innerHTML +=
+          Event.element(event).id + ' ' +
+          event.type + '<br/>';
+      }
+    </script>
+  </head>
+
+  <body>
+    <form name="infoForm">
+      <div>
+        <label>Dog's name:</label>
+        <input type="text" id="nameField"/>
+      </div>
+      <div>
+        <label>Breed:</label>
+        <input type="text" id="breedField"/>
+      </div>
+      <div>
+        <label>Date of birth:</label>
+        <input type="text" id="dobField"/>
+      </div>
+      <div>
+        <input type="submit" id="submitButton"/>
+      </div>
+    </form>
+    <div id="info"></div>
+  </body>
+</html>

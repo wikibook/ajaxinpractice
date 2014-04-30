@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Disc Test</title>
+    <script type="text/javascript" src="scripts/prototype.js"></script>
+    <script type="text/javascript" src="Disc.js"></script>
+    <script type="text/javascript" src="CD.js"></script>
+    <script type="text/javascript" src="DVD.js"></script>
+    <script type="text/javascript">
+      var myCollection = [
+       new CD('18 B Sides','Moby',17),
+       new CD('Bellatrix','Jorgen Skogmo',4),
+       new CD('City to City','Jerry Rafferty',15),
+       new DVD('Alien','Ridley Scott',45),
+       new DVD('Brazil','Terry Gilliam',2),
+       new DVD('Chicken Run','Nick Park',213)
+       /* and on and on ... */
+      ];
+    </script>
+  </head>
+
+  <body>
+
+    <script>
+      myCollection.each(
+        function(disc) {
+          document.write(
+            '<p>' + disc.title + ':' + disc.whereIsIt() + '</p>'
+          );
+        }
+      );
+    </script>
+
+  </body>
+
+</html>

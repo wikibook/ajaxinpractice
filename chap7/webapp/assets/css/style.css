@@ -1,0 +1,60 @@
+div.accordionHeader, div.accordionHeaderHighlight, div.accordionHeaderSelected
+{
+  font-family: Tahoma;
+  font-size:   14px;
+  font-weight: bold;
+  
+  height: 24px;
+  width: 100%;
+}
+
+div.accordionHeader
+{
+  border-top:       1px solid #BDC7E7;
+  border-bottom:    1px solid #182052;
+  background-color: #6B79A5;
+  color:            #AFD7E3;
+}
+
+div.accordionHeaderHighlight
+{
+  border-top:       1px solid #BDC7E7;
+  border-bottom:    1px solid #182052;
+  background-color: #43497C;
+  color:            #E8FFFF;
+}
+
+div.accordionHeaderSelected
+{
+  border-top:       1px solid #BDC7E7;
+  border-bottom:    1px solid #182052;
+  background-color: #53598C;
+  color:            #E8FFFF;
+}
+
+div.accordionContainer
+{
+  border: 1px solid #1F699B;
+}
+
+div.accordionContent
+{
+  height:  200px;
+  width:   100%;
+  overflow:auto;
+}
+
+div.accordionHeaderContainer
+{
+  margin-left:2%;
+  margin-top: 1%;
+  
+  height:  100%;
+  overflow:hidden;
+}
+
+div.accordionContentContainer
+{
+  margin-left:2%;
+  margin-top: 1%;
+}

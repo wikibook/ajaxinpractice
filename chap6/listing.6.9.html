@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>Listing 6.9</title>
+    <script type="text/javascript"
+            src="jquery.js"></script>
+    <script type="text/javascript"
+            src="jquery.form.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#testForm').ajaxForm({
+          type: 'POST',
+          target: '#results'
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <form id="testForm"
+          action="/aip.chap6/requestInspector">
+      <div>
+        Text:
+        <input type="text" id="aTextField" name="aTextField"/>
+      </div>
+      <div>
+        Password:
+        <input type="password" id="aPassword" name="aPassword"/>
+      </div>
+      <div>
+        Checkbox:
+        <input type="checkbox" id="aCheckbox" name="aCheckbox"/>
+      </div>
+      <div>
+        Radio buttons:
+        <input type="radio" name="aRadioGroup" id="aRadio1"/> 1
+        <input type="radio" name="aRadioGroup" id="aRadio2"/> 2
+      </div>
+      <div>
+        Select:
+        <select name="aSelect" id="aSelect">
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+      <div>
+        Textarea:
+        <textarea rows="2" name="aTextarea" id="aTextarea">
+        </textarea>
+      </div>
+      <div><input type="submit"/></div>
+    </form>
+    <div id="results"></div>
+  </body>
+</html>

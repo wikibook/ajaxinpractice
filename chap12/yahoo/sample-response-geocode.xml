@@ -1,0 +1,11 @@
+<ResultSet xsi:schemaLocation="urn:yahoo:maps http://api.local.yahoo.com/MapsService/V1/GeocodeResponse.xsd">
+  <Result precision="zip">
+    <Latitude>30.4335</Latitude>
+    <Longitude>-97.8002</Longitude>
+    <Address/>
+    <City>AUSTIN</City>
+    <State>TX</State>
+    <Zip>78750</Zip>
+    <Country>US</Country>
+  </Result>
+</ResultSet>

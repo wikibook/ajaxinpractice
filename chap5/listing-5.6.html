@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Events!</title>
+    <script type="text/javascript">
+      window.onload = function() {
+        document.getElementById('anImage').addEventListener(
+          'click', react, false);
+        document.getElementById('level1').addEventListener(
+          'click', react, true);
+        document.getElementById('level2').addEventListener(
+          'click', react, false);
+      }
+
+      function react(event) {
+        document.getElementById('info').innerHTML +=
+          'I woof at ' + event.currentTarget.id + '!<br/>';
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="level1">
+      <div id="level2">
+        <img src="image.jpg" id="anImage"/>
+      </div>
+    </div>
+    <div id="info"></div>
+  </body>
+</html>

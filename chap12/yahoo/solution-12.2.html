@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>Where Am I?</title>
+    <script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=2.0&appid=YahooDemo"></script>
+    <script type="text/javascript">
+
+      var map;
+
+      window.onload = function() {
+        map = new YMap( document.getElementById( 'theMap' ) );
+        map.addPanControl();
+        map.addZoomLong();
+      }
+
+      function showMap() {
+        var zoomLevel = 4;
+        var latitude = document.mapForm.latitude.value;
+        var longitude = document.mapForm.longitude.value;
+        var point = new YGeoPoint( latitude, longitude );
+        map.drawZoomAndCenter( point, zoomLevel );
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <div>
+      <form name="mapForm" onsubmit="showMap();return false;">
+        Latitude: <input type="text" name="latitude"/>
+        Longitude: <input type="text" name="longitude"/>
+        <input type="submit"/>
+      </form>
+    </div>
+
+    <div id="theMap" style="width:600px;height:480px"></div>
+
+  </body>
+
+</html>

@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Listing 6.1</title>
+    <script type="text/javascript"
+            src="prototype-1.5.1.js">
+    </script>
+    <script type="text/javascript"
+            src="listing.6.2.js">
+    </script>
+    <script type="text/javascript">
+      var framework = new ValidatorFramework();
+      window.onload = function() {
+        Event.observe('testForm','submit',function(event) {
+          if (!framework.validateForm(event.target))
+            Event.stop(event);
+        });
+      }
+    </script>
+    <title>Validation FrameWork</title>
+    <style type="text/css">
+      div.error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="testForm"
+          method="post"
+          action="/aip.chap6/requestInspector">
+      <div> Name :
+        <input name="name" type="text"
+               id="name" valid="all"
+               error="name_err"/>
+        <div class="error" id="name_err"></div>
+      </div>
+      <div> Age :
+        <input name="age" type="text"
+               id="age" valid="number"
+         error="age_err"/>
+        <div class="error" id="age_err"></div>
+      </div>
+      <div>
+        <input type="submit"/>
+      </div>
+    </form>
+  </body>
+</html>

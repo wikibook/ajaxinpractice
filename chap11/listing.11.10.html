@@ -1,0 +1,45 @@
+<html>
+<head>
+<script src="../json.js"></script>
+<script src="../cookies.js"></script>
+</head>
+
+<script>
+
+function getState()
+{
+	mainState = new Object();
+	var wizardState = new Object();
+
+	mainState.wizard = wizardState;
+
+	wizardState.ip = '192.168.1.6';
+	wizardState.nm = '255.255.255.0';
+	wizardState.gw = '192.168.1.1';
+
+	mainState.userName = 'json';
+	mainState.password = 'nosj15';
+	mainState.style = 'bluesteel';
+
+	return mainState;
+}
+
+function storeState(state)
+{
+	serialized = state.toJSONString();
+	WM_setCookie('state', serialized, 24*100);
+}
+
+
+function testStateMechanism()
+{
+	state = getState();
+	storeState(state);
+}
+
+testStateMechanism();
+
+</script>
+
+
+</html>

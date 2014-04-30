@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Page Events</title>
+    <script type="text/javascript" src="prototype-1.5.1.js">
+    </script>
+    <script type="text/javascript">
+      window.onload = function() {
+        alert('Loaded!');
+        window.onunload = function() {
+          alert('Unloaded!');
+        }
+        window.onbeforeunload = function() {
+          return 'Leaving so soon?';
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <a href="listing-5.11.html">Do it again!</a>
+  </body>
+</html>

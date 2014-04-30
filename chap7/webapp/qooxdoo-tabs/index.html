@@ -1,0 +1,49 @@
+<HTML>
+  <HEAD>
+    <TITLE>Chaotic Images</TITLE>
+    <SCRIPT SRC='../assets/js/qooxdoo/include.js' TYPE='text/javascript'></SCRIPT>
+
+    <SCRIPT LANGUAGE='JavaScript'>
+      <!--
+  window.application.main = function()
+  {
+    var d = this.getClientWindow().getClientDocument();
+
+    var tf1 = new QxTabView();
+    tf1.set({ left: 20, top: 48, width: 342, height: 362 });
+
+    var t1 = new QxTabViewButton('Dreamsilk');
+    var t2 = new QxTabViewButton('Leaf');
+    var t3 = new QxTabViewButton('Spirochete');
+    var t4 = new QxTabViewButton('Trilobite');
+
+    t1.setChecked(true);
+
+    tf1.getBar().add(t1, t2, t3, t4);
+
+    var p1 = new QxTabViewPage(t1);
+    var p2 = new QxTabViewPage(t2);
+    var p3 = new QxTabViewPage(t3);
+    var p4 = new QxTabViewPage(t4);
+
+    tf1.getPane().add(p1, p2, p3, p4);
+
+    var i1 = new QxImage('../assets/images/chaos/ifs/dreamsilk.jpg');
+    var i2 = new QxImage('../assets/images/chaos/ifs/leaf.jpg');
+    var i3 = new QxImage('../assets/images/chaos/ifs/spirochete.jpg');
+    var i4 = new QxImage('../assets/images/chaos/ifs/trilobite.jpg');
+    
+    p1.add(i1);
+    p2.add(i2);
+    p3.add(i3);
+    p4.add(i4);
+
+    d.add(tf1);
+  };
+      //-->
+    </SCRIPT>
+  </HEAD>
+  <BODY>
+  
+  </BODY>
+</HTML>

@@ -1,0 +1,258 @@
+
+
+
+#content {
+   margin-left: 230px;
+   background-color: transparent;
+}
+
+#sidebar {
+   float: left;
+   width: 220px;
+   margin: 0px;
+   margin-right: 5px;
+   padding: 0px;
+}
+
+#leftHalf {
+   float:left;
+   width: 300px;
+   margin: 0px 5px 0px 0px;
+   padding: 0px;
+}
+
+#rightHalf {
+   width: 300px;
+   margin: 0px;
+   margin-left: 310px;
+   padding: 0px;
+}
+
+#position {
+   padding-top: 0px;
+   margin-top:  0px;
+}
+
+div.portalContent p { margin: 6px 8px 0px 8px; padding: 0px; }
+div.header {margin: 0px 8px 0px 8px; padding: 0px;}
+
+#accordionExample {
+	width : 500px;
+}
+
+
+#formLetterAccordion {
+	font-family : Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size   : 11px;
+}
+
+body, p {
+	font-family : Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size   : 11px;
+}
+
+body {
+  background: #FFF;
+}
+
+.mainContent p {
+	font-size : 14px;
+}
+
+
+.mainheader {
+   font-weight : bold;
+   font-size   : 16px;
+}
+
+a:visited, a:link, a:hover  {
+	font-family : Trebuchet MS, Arial, Helvetica, sans-serif;
+}
+
+a:visited, a:link {
+   text-decoration : none;
+   color           : black;
+}
+
+a:hover  {
+	color           : black;
+	text-decoration : underline;
+}
+
+a.menuLink:visited, a.menuLink:link {
+   color: #CCCCCC;
+}
+
+div.mdBlueBox a:visited, div.mdBlueBox a:link {
+   color: white;
+}
+a.menuLink:hover, div.mdBlueBox a:hover {
+   color: white;
+}
+
+.menuLink {
+  margin-right : 25px;
+}
+
+div.portalContent a:visited, div.portalContent a:link {
+   text-decoration:underline;
+   color:black;
+}
+
+div.portalContent a:hover {
+   text-decoration:underline;
+}
+
+#leftHalf a:visited, #leftHalf a:link, #rightHalf a:visited, #rightHalf a:link {
+   color: white;
+}
+
+.demoLinks {
+	display : block;
+}
+
+.bigText {
+	font-family : Trebuchet MS, Arial;
+	font-size   : 18px;
+	font-weight  : bold;
+	color       : rgb(30,69,82);
+}
+		
+.menuBox, .clearBox,
+.ltOliveBox, .mdOliveBox, .dkOliveBox,
+.ltBlueBox, .mdBlueBox, .dkBlueBox,
+.portalBox, outlineBox {
+    background-color : rgb(206, 222, 189);
+	font-family      : Trebuchet MS, Verdana, Arial;
+	font-size        : 11px;
+	color            : black;
+	padding-top      : 6px;
+	padding-bottom   : 6px;
+	margin-top       : 6px;
+}
+
+.clearBox, .outlineBox {
+   background-color : transparent;
+}
+
+.outlineBox {
+   border: 1px solid gray;
+}
+
+.dkOliveBox {
+   background-color : #6b795a;
+   color:white;
+}
+.mdOliveBox {
+   background-color : #adba8c;
+}
+.ltOliveBox {
+   background-color : #cedebd;
+}
+.dkBlueBox {
+   background-color : #003658;
+   color:white;
+}
+.mdBlueBox {
+   background-color : #1f669b;
+   color:white;
+}
+.ltBlueBox {
+   background-color : #C0D4e6;
+}
+.dkBlueGreenBox {
+   background-color : #1e4552;
+   color:white;
+}
+
+ul.stylizedList {
+   list-style  : url("../images/liBullet.gif");
+}
+
+/*
+COLOR PALETTE
+DkBlueGreen #1e4552
+Orange #f79a10
+
+DkOlive #6b795a
+MdOlive #adba8c
+LtOlive #cedebd
+
+DkBlue #003658
+MdBlue  #1f669b
+LtBlue #90D4e6
+*/
+
+.headerEndCap {
+   background-color : #1F669B;
+   width:50%;
+
+}
+
+/* fixes firefox padding in table cell with image in all
+but transitional mode */
+td .imgcell { display: block; }
+
+.menuBox {
+   background-color : rgb(30, 69, 82);
+   color            : white;
+}
+	
+.cellPadding {
+   padding: 2px 2px 2px 2px;
+}
+
+.leftPadding {
+	padding-left  : 7px;
+   padding-right : 10px;
+}
+		
+.topPadding {
+	padding-top : 6px;
+}
+
+h2, .header {
+   font-weight : bold;
+   font-size   : 13px;
+}
+
+
+div.simpleDropPanel {
+   width    : 200;
+   height   : 80px;
+   padding  : 2px;
+   border   : 1px solid #5b5b5b;
+}
+
+span.indentedLine {
+   display     : block;
+   margin-left : 110px;
+}
+
+img { 
+	border-width:0; 
+}
+
+a.backToSearch:link, a.backToSearch:hover, a.backToSearch:visited {
+   text-decoration:underline;
+   font-size: 14px;
+   margin: 6px 0px 6px 0px;
+}
+
+a.no_link_hover:hover { 
+	background: none !important; 
+}
+
+div.copyright {
+	width : 45%;
+	font-size: 8px;
+	color: #999;
+	margin-top : 55px;
+	margin-left : 200px;
+	border-top : 1px solid #ddd;
+}
+
+.copyright table {
+		color : #999;
+		font-size: 8px;
+}

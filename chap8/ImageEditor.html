@@ -1,0 +1,368 @@
+<HTML>
+  <HEAD>
+    <TITLE>Image Editor</TITLE>
+    <LINK REL=STYLESHEET HREF="./assets/css/style.css" TYPE="text/css">
+    <SCRIPT type="text/javascript" src="./assets/js/prototype.js"></SCRIPT>
+    <SCRIPT type="text/javascript" src="./assets/js/Undo.js"></SCRIPT>
+    <SCRIPT type="text/javascript" src="./assets/js/json.js"></SCRIPT>
+<script type='text/javascript'>
+window.onload = initialize;
+
+// image editing operations analogue to values in ImageEditor.java
+var NO_OP      = 0;
+var INVERT_OP  = 1;
+var POSTER_OP  = 2;
+var BLUR_OP    = 3;
+var EDGE_OP    = 4;
+var SHARPEN_OP = 5;
+var FLIP_H_OP  = 6;
+var FLIP_V_OP  = 7;
+var ROTATE_OP  = 8;
+var STRING_OP  = 9;
+var CONVOLVE_OP=10;
+
+function initialize(){
+    undoStack.init(imageEditorHandler);
+
+    // disable add action equality check
+    // for all undoStack.add() calls
+    undoStack.doPrevActionCheck=false;
+
+    // register the initial action with
+    // the server
+    new Ajax.Request(
+      'ImageEditor?timestamp='+
+        (new Date().getTime())+'&init=yes'
+        +'&src='+encodeURI($('editingImage').src),
+      { method: 'get',
+        onSuccess: addActionCallback
+      }
+    );
+}
+
+function imageEditorHandler(action,undo){
+    if(action != null){
+        // we have an actual action, not an
+        // action for only setting button
+        // states
+        if(action.type != null){
+            var table = $('historyPalette');
+            var selected = -1;
+
+            // find selected the selected row in the
+            // history palette
+            for(var i=0;i<table.rows.length;i++){
+                if(table.rows[i].selected){
+                    selected=i;
+                    break;
+                }
+            }
+
+            // a history palette row is selected
+            if(selected > -1){
+                // set the previous action
+                if(undo){
+                    table.rows[selected].className ='paletteDisabled';
+                    table.rows[selected].selected  =false;
+                    table.rows[selected].dimmed    =true;
+
+                }else{
+                    // set the next action
+                    table.rows[selected].className ='paletteNormal';
+                    table.rows[selected].selected  =false;
+                    table.rows[selected].dimmed    =false;
+                }
+
+                var new_i=(undo) ? selected-1 : selected+1;
+                table.rows[new_i].className='paletteSelected';
+                table.rows[new_i].selected =true;
+                table.rows[new_i].dimmed   =false;
+
+                undoStack.seek(new_i);
+                new Ajax.Request(
+                  'ImageEditor?timestamp='+
+                    (new Date().getTime())+'&seek='+(new_i),
+                  { method: 'get',
+                    onSuccess: seekCallback
+                  }
+                );
+            }
+        }
+
+        // set the undo/redo button states
+        $('undoButton').disabled=!action.canUndo;
+        $('redoButton').disabled=!action.canRedo;
+    }
+}
+
+// stack index seek callback
+// sets the editing image's source
+// to the current action
+function seekCallback(xhr){
+    $('editingImage').src=xhr.responseText;
+}
+
+
+// add handler for all image operations
+// sets the querystring for the ajax request
+// depending on the operation selected,
+// then adds the action to the undo stack
+// on the client and server.
+function addAction(op){
+    var action     =null;
+    var paramString='';
+
+    switch(op){
+        case ROTATE_OP:{
+            action={
+                rotAngle: $F('rotAngle')
+            };
+            paramString='&params='+action.rotAngle;
+            break;
+        }
+        case STRING_OP:{
+            action={
+                string: $F('string'),
+                color:  $F('color'),
+                locX:   $F('locX'),
+                locY:   $F('locY')
+            };
+            paramString=
+                '&params='+
+                encodeURI(
+                action.string.replace(/,/g,'%%')+','+
+                action.color+','+
+                action.locX+','+
+                action.locY);
+            break;
+        }
+        case CONVOLVE_OP:{
+            action=[];
+            for(var i=0;i<9;i++){
+                action[i]=$F(
+                    'c'+
+                    Math.floor(i/3)+
+                    '_'+
+                    (i%3)
+                );
+            }
+            paramString='&params='+encodeURI(action);
+        }
+        case INVERT_OP:
+        case POSTER_OP:
+        case BLUR_OP:
+        case EDGE_OP:
+        case SHARPEN_OP:
+        case FLIP_H_OP:
+        case FLIP_V_OP:
+        case NO_OP:
+        default:{break;}
+    }
+
+    undoStack.add(op,action);
+    new Ajax.Request(
+      'ImageEditor?timestamp='+
+        (new Date().getTime())+'&action='+
+        op+paramString,
+      { method: 'get',
+        onSuccess: addActionCallback
+      }
+    );
+}
+
+
+
+// add action callback
+// sets the editing image's source to
+// the current action, adds an entry
+// to the history palette, and removes
+// any orphaned history palette entries
+function addActionCallback(xhr){
+    var table   =$('historyPalette');
+    var content =xhr.responseText.split('<!-- BREAK -->');
+    var found   =false;
+    var toDelete=new Array();
+
+    var editingImgSrc   =content[0];
+    var newRowProperties=JSON.parse(content[1]);
+    var eventCalls      =content[2];
+
+    $('editingImage').src=editingImgSrc;
+
+    for(var i=0;i<table.rows.length;i++){
+        if(newRowProperties.id == table.rows[i].id){
+            found=true;
+        }
+
+        if(found){
+            toDelete[toDelete.length]=i;
+        }else{
+            table.rows[i].className='paletteNormal';
+            table.rows[i].dimmed   =false;
+            table.rows[i].selected =false;
+        }
+    }
+
+    for(var i=toDelete.length-1;i>=0;i--){
+        table.deleteRow(toDelete[i]);
+    }
+
+    var newRow     =table.insertRow(table.rows.length);
+    var imageCell  =newRow.insertCell(0);
+    var contentCell=newRow.insertCell(1);
+
+    newRow.id       =newRowProperties.id;
+    newRow.className='paletteSelected';
+    newRow.selected =true;
+    newRow.dimmed   =false;
+
+    imageCell.className=newRowProperties.paletteImageClass;
+    imageCell.innerHTML=newRowProperties.paletteImageHTML;
+
+    contentCell.className=newRowProperties.paletteContentClass;
+    contentCell.innerHTML=newRowProperties.paletteContentHTML;
+
+    eval(eventCalls);
+}
+
+// mouse over event for history palette
+// set class for palette row to highlight
+function historyPaletteMouseOver(event){
+    var tr=findTarget(Event.element(event));
+    var id=tr.id;
+    tr.className='paletteHighlight';
+}
+
+// mouse out event for history palette
+// set class for palette row to disabled
+// if downstream from selected row, selected
+// if selected row, and normal if upstream
+// from selected row
+function historyPaletteMouseOut(event){
+    var tr=findTarget(Event.element(event));
+    var id=tr.id;
+    if(tr.dimmed){
+        tr.className='paletteDisabled';
+    }else if(tr.selected){
+        tr.className='paletteSelected';
+    }else{
+        tr.className='paletteNormal';
+    }
+}
+
+// mouse down event for history palette
+// set class for palette row to selected
+function historyPaletteMouseDown(event){
+    var tr=findTarget(Event.element(event));
+    var id=tr.id;
+    tr.className='paletteSelected';
+}
+
+// mouse click event for history palette
+// set new selected row and update classes
+// for all rows
+// seek stack index to selected row
+function historyPaletteMouseClick(event){
+    var table=$('historyPalette');
+    var tr=findTarget(Event.element(event));
+    var id=tr.id;
+    var disable=false;
+
+    for(var i=0;i<table.rows.length;i++){
+        var className='paletteNormal';
+        table.rows[i].dimmed  =false;
+        table.rows[i].selected=false;
+        if(disable){
+            table.rows[i].dimmed=true;
+            className='paletteDisabled';
+        }else if(tr.id == table.rows[i].id){
+            table.rows[i].selected=true;
+            className='paletteSelected';
+            disable=true;
+        }
+
+        table.rows[i].className=className;
+    }
+
+    // seek the stack to the selected action
+    var idx=parseInt(id.replace(/action_/,''));
+
+    undoStack.seek(idx);
+    new Ajax.Request(
+      'ImageEditor?timestamp='+
+        (new Date().getTime())+'&seek='+idx,
+      { method: 'get',
+        onSuccess: seekCallback
+      }
+    );
+}
+
+// used in the mouse events for history
+// palette rows. finds the row affected
+function findTarget(element){
+    var parent=null;
+
+    while(parent == null){
+        if(element.id.indexOf('action_') == 0){
+            parent=element;
+        }else{
+            element=element.parentNode;
+        }
+    }
+
+    return(parent);
+}
+
+</script>
+  </HEAD>
+  <BODY>
+    <TABLE WIDTH='100%'>
+      <TR>
+        <TH CLASS='main' WIDTH='25%'>Operations</TH>
+        <TH CLASS='main'>Image</TH>
+        <TH CLASS='main' WIDTH='25%'>History</TH>
+      </TR>
+      <TR>
+        <TD ID='actions' VALIGN='TOP'>
+          <INPUT CLASS='button' TYPE='button' ID='invertButton' VALUE='Invert' onClick='addAction(INVERT_OP)'>
+          <INPUT CLASS='button' TYPE='button' ID='posterizeButton' VALUE='Posterize' onClick='addAction(POSTER_OP)'><BR><BR>
+          <INPUT CLASS='button' TYPE='button' ID='blurButton' VALUE='Blur' onClick='addAction(BLUR_OP)'>
+          <INPUT CLASS='button' TYPE='button' ID='sharpenButton' VALUE='Sharpen' onClick='addAction(SHARPEN_OP)'><BR><BR>
+          <INPUT CLASS='button' TYPE='button' ID='flipHButton' VALUE='Flip Horizontal' onClick='addAction(FLIP_H_OP)'>
+          <INPUT CLASS='button' TYPE='button' ID='flipVButton' VALUE='Flip Vertical' onClick='addAction(FLIP_V_OP)'><BR><BR>
+          <CENTER>
+          <INPUT CLASS='button' TYPE='button' ID='edgeButton' VALUE='Edge Detect' onClick='addAction(EDGE_OP)'>
+          </CENTER>
+          <HR>
+          <FONT CLASS='label'>Convolve</FONT><BR>
+          <INPUT CLASS='text' ID='c0_0' SIZE='3'><INPUT CLASS='text' ID='c0_1' SIZE='3'><INPUT CLASS='text' ID='c0_2' SIZE='3'><BR>
+          <INPUT CLASS='text' ID='c1_0' SIZE='3'><INPUT CLASS='text' ID='c1_1' SIZE='3'><INPUT CLASS='text' ID='c1_2' SIZE='3'><BR>
+          <INPUT CLASS='text' ID='c2_0' SIZE='3'><INPUT CLASS='text' ID='c2_1' SIZE='3'><INPUT CLASS='text' ID='c2_2' SIZE='3'><BR><BR>
+          <INPUT CLASS='button' TYPE='button' ID='convolveButton' VALUE='Convolve' onClick='addAction(CONVOLVE_OP)'><BR><BR>
+          <HR>
+          <FONT CLASS='label'>Angle (Degreees)</FONT><BR>
+          <INPUT CLASS='text' ID='rotAngle' SIZE='4'><BR><BR>
+          <INPUT CLASS='button' TYPE='button' ID='rotateButton' VALUE='Rotate' onClick='addAction(ROTATE_OP)'><BR><BR>
+          <HR>
+          <FONT CLASS='label'>Text</FONT><BR>
+          <INPUT CLASS='text' ID='string'><BR>
+          <FONT CLASS='label'>Color (Hex-format)</FONT><BR>
+          <INPUT CLASS='text' ID='color' SIZE='6'><BR>
+          <FONT CLASS='label'>X</FONT><BR>
+          <INPUT CLASS='text' ID='locX' SIZE='4'><BR>
+          <FONT CLASS='label'>Y</FONT><BR>
+          <INPUT CLASS='text' ID='locY' SIZE='4'><BR><BR>
+          <INPUT CLASS='button' TYPE='button' ID='stringButton' VALUE='Add Text' onClick='addAction(STRING_OP)'><BR><BR>
+        </TD>
+        <TD ID='image' ALIGN='CENTER' VALIGN='TOP'><IMG BORDER='1' ID='editingImage' src='assets/images/chaos/ifs/leaf.jpg'></TD>
+        <TD VALIGN='TOP' ALIGN='CENTER'>
+          <INPUT CLASS='button' STYLE='WIDTH:70px' TYPE='button' ID='undoButton' VALUE='Undo' onClick='undoStack.undo()' disabled='true'>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <INPUT CLASS='button' STYLE='WIDTH:70px' TYPE='button' ID='redoButton' VALUE='Redo' onClick='undoStack.redo()' disabled='true'>
+          <HR>
+          <TABLE CLASS='palette' ID='historyPalette'></TABLE>
+        </TD>
+      </TR>
+    </TABLE>
+  </BODY>
+</HTML>

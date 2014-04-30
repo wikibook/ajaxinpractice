@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>Find flickr NSID</title>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript">
+      function findNSID() {
+        new Ajax.Request(
+          '/aip.chap12/proxy',
+          {
+            method: 'get',
+            parameters: $H(
+                {
+                  '.serviceUrl.': 'http://www.flickr.com/services/rest/',
+                  api_key: '78eaa5287f3f0b37dfba77ef40c7df03',
+                  method: 'flickr.people.findByUsername',
+                  username: $F('username')
+                }
+              ).toQueryString(),
+            onSuccess: onResultObtained
+          }
+        );
+        $('resultContainer').innerHTML = '';
+      }
+
+      function onResultObtained(request) {
+        var xml = request.responseXML;
+        if (xml.getElementsByTagName('rsp')[0].getAttribute('stat') == 'ok') {
+          showResults(xml);
+        }
+        else {
+          $('resultContainer').innerHTML = 'Request failed.';
+        }
+      }
+
+      function showResults(xml) {
+        var nsid = xml.getElementsByTagName('user')[0].getAttribute('nsid');
+        var p = document.createElement('p');
+        p.appendChild(
+          document.createTextNode('The Flickr NSID for ' +
+                                  document.queryForm.username.value +
+                                  ' is: ') );
+        var span = document.createElement('span');
+        span.style.fontWeight = 'bold';
+        span.appendChild(document.createTextNode(nsid));
+        p.appendChild(span);
+        $('resultContainer').appendChild(p);
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <div>
+      <form name="queryForm" onsubmit="findNSID();return false;">
+        Find Flickr NSID for:
+        <input type="text" name="username" id="username"/>
+        <input type="submit"/>
+      </form>
+    </div>
+
+    <div id="resultContainer"></div>
+
+  </body>
+
+</html>

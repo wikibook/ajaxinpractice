@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Submit!</title>
+    <script type="text/javascript" src="prototype-1.5.1.js">
+    </script>
+    <script type="text/javascript">
+      window.onload = function() {
+        Event.observe('infoForm','submit',submitMe);
+        $('addressField').focus();
+      }
+
+      function submitMe(event) {
+        new Ajax.Request(
+          '/aip.chap5/handleSubmission',
+          {
+            method: 'post',
+            parameters: $('infoForm').serialize(true),
+            onSuccess: function (transport) {
+              $('info').innerHTML = transport.responseText;
+            }
+          }
+        );
+        Event.stop(event);
+      }
+    </script>
+  </head>
+
+  <body>
+    <form id="infoForm" action="/aip.chap5/shouldNotActivate">
+      <div>
+        <label>Address:</label>
+        <input type="text" id="addressField" name="address"/>
+      </div>
+      <div>
+        <label>City:</label>
+        <input type="text" id="cityField" name="city"/>
+        <label>State:</label>
+        <input type="text" id="stateField" name="state"/>
+        <label>Zip Code:</label>
+        <input type="text" id="zipCodeField" name="zipCode"/>
+      </div>
+      <div>
+        <input type="submit" id="submitButton"/>
+      </div>
+    </form>
+    <div id="info"></div>
+  </body>
+</html>

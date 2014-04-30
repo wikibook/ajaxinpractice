@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<TITLE>Chaotic Images</TITLE>
+<SCRIPT type='text/javascript' src='../assets/js/jQuery.js'></SCRIPT>
+<SCRIPT type='text/javascript'>
+function invokeLink(url){
+  $('#content_area').load(url);
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+  <TABLE WIDTH='100%'>
+    <TR>
+      <TD WIDTH='25%'>Images</TD>
+      <TD WIDTH='75%'>Current Image</TD>
+    </TR>
+    <TR>
+      <TD VALIGN='TOP'>
+        <TABLE>
+          <TR><TD><IMG SRC='../assets/images/chaos/ifs/dreamsilk.jpg'  WIDTH='24' HEIGHT='24'> <A HREF="javascript:invokeLink('dreamsilk.html')">Dreamsilk</A></TD></TR>
+          <TR><TD><IMG SRC='../assets/images/chaos/ifs/leaf.jpg'       WIDTH='24' HEIGHT='24'> <A HREF="javascript:invokeLink('leaf.html')">Leaf</A></TD></TR>
+          <TR><TD><IMG SRC='../assets/images/chaos/ifs/spirochete.jpg' WIDTH='24' HEIGHT='24'> <A HREF="javascript:invokeLink('spirochete.html')">Spirochete</A></TD></TR>
+          <TR><TD><IMG SRC='../assets/images/chaos/ifs/trilobite.jpg'  WIDTH='24' HEIGHT='24'> <A HREF="javascript:invokeLink('trilobite.html')">Trilobite</A></TD></TR>
+        </TABLE>
+      </TD>
+      <TD VALIGN='TOP' ID='content_area'>
+        <BR><BR>
+        Click on an image to the left to view it.
+      </TD>
+    </TR>
+  </TABLE>
+</BODY>
+</HTML>

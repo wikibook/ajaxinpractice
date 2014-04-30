@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope 
+  xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <soapenv:Body>
+    <ns1:getInfoResponse 
+      soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+      xmlns:ns1="../axis/HelloWorld.jws">
+      <getInfoReturn href="#id0"/>
+    </ns1:getInfoResponse>
+    <multiRef id="id0" soapenc:root="0" 
+      soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+      xsi:type="ns2:Map" 
+      xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+      xmlns:ns2="http://xml.apache.org/xml-soap">
+      <item>
+        <key xsi:type="soapenc:string">initial</key>
+        <value xsi:type="soapenc:string">D</value>
+      </item>
+      <item>
+        <key xsi:type="soapenc:string">name</key>
+        <value xsi:type="soapenc:string">dave</value>
+      </item>
+      <item>
+        <key xsi:type="soapenc:string">likes</key>
+        <value soapenc:arrayType="xsd:string[3]" xsi:type="soapenc:Array">
+          <value xsi:type="xsd:string">JavaScript</value>
+          <value xsi:type="xsd:string">Skiing</value>
+          <value xsi:type="xsd:string">Apple Pie</value>
+        </value>
+      </item>
+    </multiRef>
+  </soapenv:Body>
+
+</soapenv:Envelope>

@@ -1,0 +1,92 @@
+<HTML>
+  <HEAD>
+    <TITLE>Google Search As Bookmarks</TITLE>
+    <SCRIPT type="text/javascript" src="./assets/js/prototype.js"></SCRIPT>
+  </HEAD>
+  <BODY>
+  Search for:
+  <INPUT ID='bookmark'>
+  <INPUT TYPE='button' VALUE='Search' onClick="setLocation(document.getElementById('bookmark').value);">
+
+  <BR><BR>
+
+  Results:
+  <DIV STYLE='border: 1px solid #FF0000;' ID='google_suggest_target'></DIV>
+  </BODY>
+<SCRIPT LANGUAGE='JavaScript'>
+  <!--
+var currentHash;
+
+setInterval('checkHash()', 250);
+
+function checkHash(){
+    var newHash=getHash();
+
+    if(newHash && (newHash != currentHash)){
+        currentHash=newHash;
+        $('bookmark').value=unescape(currentHash);
+        getBookmark();
+    }
+}
+
+function getHash(){
+    if(window.location.href.indexOf('#') > -1){
+        return(window.location.href.replace(/(.*)(#)(.*)/,'$3'));
+    }else{
+        return(null);
+    }
+}
+
+function getBookmark() {
+    new Ajax.Request(
+      '/Bookmarks?bookmarkId='+currentHash,
+      { method: 'get',
+        onComplete: function(xhr){
+          eval(xhr.responseText);
+        }
+      }
+    );
+}
+
+function setTitle(title){
+    var google_suggest_target = $("google_suggest_target");
+
+    if (google_suggest_target){
+        google_suggest_target.innerHTML = title+'<BR><BR>'+google_suggest_target.innerHTML;
+    }
+}
+
+function sendRPCDone(notUsed, search_term, term_array, results_array, unused_array ){
+    var div = "<table>";
+    var google_suggest_target = $("google_suggest_target");
+
+    if (results_array.length == 0){
+        div += "<tr><td class=\"search_error\">No results found for <strong>" + search_term + "</strong></td></tr>";
+    }else{
+        for (var i = 0; i < results_array.length; i++){
+            div += "<tr><td class=\"search_term\"><a target='_NEW' href='http://www.google.com/search?q=" + unescape(term_array[i]);
+            div += "'>" + term_array[i] + '</a></td><td class="number_of_results">' + results_array[i]
+                       + "</td></tr>";
+        }
+    }
+
+    div += "</table>";
+
+    if (google_suggest_target){
+        google_suggest_target.innerHTML = div;
+    }
+}
+
+function setLocation(bookmark){
+    var location=window.location.href;
+
+    if(location.indexOf('#') > -1){
+        location=location.replace(/(.*)(#)(.*)/,'$1');
+    }
+
+    location+='#'+bookmark;
+    window.location.href=location;
+}
+  //-->
+</SCRIPT>
+</HTML>

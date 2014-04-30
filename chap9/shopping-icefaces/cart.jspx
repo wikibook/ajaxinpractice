@@ -1,0 +1,94 @@
+<f:view xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+  <html>
+  <head>
+    <style>
+      div.carthoverclass {
+        border:1px solid blue;
+      }
+      div.cart  {
+        z-index:100;
+        text-align:center;
+        height:200px;
+        padding:10px;
+        background-color:#abf
+      }
+    </style>
+  </head>
+  <body>
+
+    <h3>ICEfaces Shopping Cart</h3>    
+
+    <ice:form>
+
+      <table><tr>
+
+        <td>
+          <ice:panelGroup style="z-index:500; cursor:move;" 
+                draggable="true"
+                dragListener="#{dndBean.dragListener}"
+                dragMask="dragging,drag_cancel,hover_end"
+                dragOptions="#{craneItem.dragOptions}"
+                dragValue="#{craneItem}" >
+            <img alt="Product1" src="crane_3d.jpg" />
+            <br/>
+            AJAX in Action.                 
+          </ice:panelGroup>
+        </td>
+
+        <td>
+          <ice:panelGroup style="z-index:500; cursor:move;" 
+                draggable="true"
+                dragListener="#{dndBean.dragListener}"
+                dragMask="dragging,drag_cancel,hover_end"
+                dragOptions="#{blackItem.dragOptions}"
+                dragValue="#{blackItem}">
+            <img alt="Product2" src="black_3d.jpg" />
+            <br/>
+            Ruby for Rails.
+          </ice:panelGroup>
+        </td>
+
+        <td>
+          <ice:panelGroup style="z-index:500; cursor:move;" 
+                draggable="true"
+                dragListener="#{dndBean.dragListener}"
+                dragMask="dragging,drag_cancel,hover_end"
+                dragOptions="#{rockItem.dragOptions}"
+                dragValue="#{rockItem}">
+            <img alt="Product3" src="rock.jpg" />
+            <br/>
+            An ordinary rock.
+          </ice:panelGroup>
+        </td>
+
+      </tr></table>
+
+
+      <table><tr>
+  
+        <td width="400px">
+          <ice:panelGroup style="z-index:0;"
+             dropTarget="true">     
+              <div id="cart" class="cart" >
+                Book Shopping Cart
+              </div>
+         </ice:panelGroup>
+        </td>
+        
+        <td width="25">
+        </td>
+
+        <td width="50">
+          <ice:outputText value="#{dndBean.dragMessage}"/>
+        </td>
+
+      </tr></table>
+
+
+    </ice:form>
+  </body>
+  </html>
+</f:view>

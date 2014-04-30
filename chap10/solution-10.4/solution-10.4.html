@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title>Validate me!</title>
+    <script type="text/javascript" src="../prototype.js"></script>
+    <script type="text/javascript" src="FieldValidator.js"></script>
+    <script type="text/javascript" src="HelpConveyer.js"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+        new FieldValidator('nameField',
+                           FieldValidator.verifier.NotBlank);
+        new FieldValidator('emailField',
+                           '/aip.chap10/command/VerifyEmail');
+        new FieldValidator('ageField',
+                           FieldValidator.verifier.IsNumeric);
+        new HelpConveyer(
+          'helpDisplay',
+          document.memberForm,
+          '/aip.chap10/command/GetHelp',
+          'topic'
+        );
+        document.memberForm.name.focus();
+      }
+    </script>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <style type="text/css">
+      body {
+        font-size: 8pt;
+      }
+      #formControls {
+        float: left;
+      }
+      #helpContainer {
+        float: left;
+      }
+      #nameField, #emailField {
+        width: 256px;
+      }
+      #ageField {
+        width: 64px;
+      }
+      .fieldInError {
+        background-color: #ffffcc;
+        border-color: maroon;
+      }
+      #errorContainer {
+        border: 3px outset maroon;
+        background-color: #ffffcc;
+        padding: 4px;
+        color: maroon;
+        font-weight: bold;
+        margin-bottom: 12px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <fieldset style="width:600px;height:340px;padding-top:16px">
+      <legend>Become a member!</legend>
+
+      <div id="formControls">
+        <form name="memberForm">
+
+          <div id="errorContainer" style="display:none"></div>
+
+          <div class="line">
+            <label>Member name:</label>
+            <input type="text" name="name" id="nameField"/>
+          </div>
+
+          <div class="line">
+            <label>E-mail address:</label>
+            <input type="text" name="email" id="emailField"/>
+          </div>
+
+          <div class="line">
+            <label>Your age:</label>
+            <input type="text" name="age" id="ageField"/>
+          </div>
+
+          <div align="center" id="buttonBar">
+            <input type="button" value="Join!" name="joinButton"/>
+            <input type="button" value="Cancel" name="cancelButton"/>
+          </div>
+
+          <div id="console"></div>
+
+        </form>
+      </div>
+
+      <div id="helpContainer">
+        <div id="helpSticky">
+          <div id="helpDisplay">
+          </div>
+        </div>
+      </div>
+
+    </fieldset>
+  </body>
+</html>

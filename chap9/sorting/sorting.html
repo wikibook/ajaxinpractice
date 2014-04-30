@@ -1,0 +1,98 @@
+<html>
+<head>
+<script src="lib/prototype.js"></script>
+<script src="lib/scriptaculous.js"></script>
+<script src="dwr/interface/Demo.js"></script>
+<script src="dwr/engine.js"></script>
+<script src="dwr/util.js"></script>
+
+<script>
+function handleUpdate(list)  {
+    Demo.checkPlant(
+            Sortable.serialize("vegetables") 
+            +"&" + Sortable.serialize("fruits"),
+             showPlantMessage);
+}
+
+function showPlantMessage(message)  {
+    DWRUtil.setValue("plant-error", message);
+}
+</script>
+
+<style>
+li.green {
+  background-color: #ECF3E1;
+  border:1px solid #C5DEA1;
+  cursor: move;
+}
+
+li.orange {
+  border:1px solid #E8A400;
+  background-color: #FFF4D8;
+}
+
+span.handle {
+  background-color: #E8A400;
+  color:white;
+  cursor: move;
+}
+</style>
+
+</head>
+
+<body>
+
+<h3>Sortable Lists</h3>    
+
+<div style="height:200px;">
+
+<div style="float:left;">
+<h3>Vegetables</h3>
+  <ul id="vegetables" style="height:150px;width:200px;">
+    <li class="orange" id="left_Pumpkin">
+      <span class="handle">HANDLE</span> Pumpkin.
+    </li>
+    <li class="green" id="left_Carrot">Carrot.</li>
+    <li class="orange" id="left_Orange">
+      <span class="handle">HANDLE</span> Orange.
+    </li>
+  </ul>
+</div>
+
+<div style="float:left;">
+  <h3>Fruits</h3>
+  <ul id="fruits" style="height:150px;width:200px;">
+    <li class="orange" id="right_Apple">
+      <span class="handle">HANDLE</span> Apple.
+    </li>
+    <li class="orange" id="right_Tomato">
+      <span class="handle">HANDLE</span> Tomato.</li>
+    <li class="green" id="right_Turnip">Turnip.</li>
+  </ul>
+</div>
+
+<br>
+
+<div style="clear: both; margin-left: 150px;">
+  <span id="plant-error" style="color: red;" ></span>
+</div>
+
+</div>
+
+<script>
+  Sortable.create("vegetables",
+     {dropOnEmpty:true,
+     containment:["vegetables","fruits"],
+     constraint:false,
+     onUpdate:handleUpdate});
+   Sortable.create("fruits",
+     {dropOnEmpty:true,handle:'handle',
+     containment:["vegetables","fruits"],
+     constraint:false,
+     onUpdate:handleUpdate});
+</script>
+
+</body>
+</html>
+
+

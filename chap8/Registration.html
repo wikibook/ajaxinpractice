@@ -1,0 +1,121 @@
+<HTML>
+  <HEAD>
+    <TITLE>Registration</TITLE>
+    <SCRIPT type="text/javascript" src="./assets/js/prototype.js"></SCRIPT>
+<script type='text/javascript'>
+
+var isHistoryShortcutDisabled=false;
+
+Event.observe(
+  document,
+  'contextmenu',
+  function(event){
+    Event.stop(event);
+    return false;
+  }
+);
+Event.observe(document,'keypress',
+  checkHistoryShortcutDisabled);
+Event.observe(document,'keydown',
+  disableHistoryShortcuts);
+
+// On Key Down event handler
+function disableHistoryShortcuts(event)
+{
+    // the tag name of the event's target element
+    var targetTag = Event.element(event).tagName;
+    var isTextInput = (
+      (targetTag == 'TEXTAREA')
+      || (targetTag == 'INPUT')
+    );
+
+    // the key code of the key being pressed
+    var keyCode = event.which || event.keyCode;
+
+    //key presses we want to block
+    if (( keyCode == 116) ||                     // F5
+        ((keyCode ==   8) && (!isTextInput))  || // backspace
+        ((keyCode ==  36) && event.altKey)    || // home + alt
+        ((keyCode ==  37) && event.altKey)    || // left arrow + alt
+        ((keyCode ==  39) && event.altKey)    || // right arrow + alt
+        ((keyCode ==  37) && event.ctrlKey)   || // left arrow + ctl
+        ((keyCode ==  39) && event.ctrlKey)   || // right arrow + ctl
+        ((keyCode ==  82) && event.ctrlKey)   || // r + control
+        ((keyCode ==  72) && event.ctrlKey))     // h + control
+    {
+        // used in the on key press event handler to determine
+        // if propagation should be stopped (for Mozilla/FireFox)
+        isHistoryShortcutDisabled=true;
+        Event.stop(event);
+        return false;
+    }
+}
+
+// On Key Press event handler
+function checkHistoryShortcutDisabled(event){
+    if(isHistoryShortcutDisabled){
+        isHistoryShortcutDisabled=false;
+        Event.stop(event);
+        return false;
+    }
+}
+
+</script>
+  </HEAD>
+  <BODY>
+    <CENTER>
+      <FORM NAME='registration'>
+        <TABLE>
+          <TR>
+            <TD>First Name</TD>
+            <TD><INPUT NAME='first_name' TYPE='text' SIZE='32'></TD>
+          </TR>
+          <TR>
+            <TD>Middle Initial</TD>
+            <TD><INPUT NAME='middle_initial' TYPE='text' SIZE='1' MAXLENGTH='1'></TD>
+          </TR>
+          <TR>
+            <TD>First Name</TD>
+            <TD><INPUT NAME='last_name' TYPE='text' SIZE='32'></TD>
+          </TR>
+          <TR>
+            <TD COLSPAN='2'><BR><HR><BR></TD>
+          </TR>
+          <TR>
+            <TD>Address</TD>
+            <TD><INPUT NAME='address_one' TYPE='text' SIZE='48'></TD>
+          </TR>
+          <TR>
+            <TD></TD>
+            <TD><INPUT NAME='address_two' TYPE='text' SIZE='48'></TD>
+          </TR>
+          <TR>
+            <TD>City</TD>
+            <TD><INPUT NAME='city' TYPE='text' SIZE='32'></TD>
+          </TR>
+          <TR>
+            <TD>State</TD>
+            <TD><INPUT NAME='state' TYPE='text' SIZE='16'></TD>
+          </TR>
+          <TR>
+            <TD>ZIP</TD>
+            <TD><INPUT NAME='zip' TYPE='text' SIZE='10'></TD>
+          </TR>
+          <TR>
+            <TD COLSPAN='2'><BR><HR><BR></TD>
+          </TR>
+          <TR>
+            <TD COLSPAN='2'>Comments</TD>
+          </TR>
+          <TR>
+            <TD COLSPAN='2'><TEXTAREA NAME='comments' COLS='48' ROWS='7'></TEXTAREA></TD>
+          </TR>
+        </TABLE>
+        <BR>
+        <INPUT TYPE='SUBMIT' VALUE='Register'>
+        &nbsp;&nbsp;
+        <INPUT TYPE='BUTTON' VALUE='Cancel' onClick='window.close()'>
+      </CENTER>
+    </FORM>
+  </BODY>
+</HTML>

@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Thumbnails!</title>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+        new Ajax.Request(
+          '/aip.chap12/proxy',
+          {
+            method: 'get',
+            parameters: $H(
+             {
+               '.serviceUrl.': 'http://www.flickr.com/services/rest/',
+               api_key: '78eaa5287f3f0b37dfba77ef40c7df03',
+               method: 'flickr.people.getPublicPhotos',
+               user_id: '71711667@N00'
+             }
+            ).toQueryString(),
+            onSuccess: onInfoObtained
+          }
+        );
+      }
+
+      function onInfoObtained(request) {
+        var xml = request.responseXML;
+        if (xml.getElementsByTagName('rsp')[0].getAttribute('stat') == 'ok') {
+          showThumbnails(xml);
+        }
+      }
+
+      function showThumbnails(xml) {
+        var photos = $A(xml.getElementsByTagName('photo'));
+        photos.each(
+          function(photo) {
+            var baseUrl = 'http://static.flickr.com/' +
+                          photo.getAttribute('server') + '/' +
+                          photo.getAttribute('id') + '_' +
+                          photo.getAttribute('secret');
+            var thumbUrl = baseUrl + '_t.jpg';
+            var photoUrl = baseUrl + '.jpg';
+            var thumb = document.createElement('img');
+            thumb.src = thumbUrl;
+            thumb.style.cursor = 'pointer';
+            thumb.onclick = showPhoto;
+            thumb.photoUrl = photoUrl;
+            $('thumbnailsContainer').appendChild(thumb);
+          }
+        );
+      }
+
+      function showPhoto() {
+        var photo = $('photoElement');
+        if (photo == null) {
+          photo = document.createElement('img');
+          photo.id = 'photoElement';
+          $('photoContainer').appendChild(photo);
+        }
+        photo.src = this.photoUrl;
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <div id="thumbnailsContainer"></div>
+
+    <div id="photoContainer"></div>
+
+  </body>
+
+</html>
+
+ <!-- ok
+<?xml version="1.0" encoding="utf-8" ?>
+<rsp stat="ok">
+<photos page="1" pages="1" perpage="100" total="8">
+	<photo id="128217127" owner="71711667@N00" secret="09e814e0b0" server="51" title="DSC01660" ispublic="1" isfriend="0" isfamily="0" />
+	<photo id="128217125" owner="71711667@N00" secret="ef6ad6886d" server="40" title="DSC01476" ispublic="1" isfriend="0" isfamily="0" />
+	<photo id="128216010" owner="71711667@N00" secret="ff13ad56b9" server="46" title="DSC01118" ispublic="1" isfriend="0" isfamily="0" />
+	<photo id="128216008" owner="71711667@N00" secret="185f9934d1" server="55" title="DSC01036" ispublic="1" isfriend="0" isfamily="0" />
+	<photo id="128216007" owner="71711667@N00" secret="398df1f7a8" server="53" title="DSC01027" ispublic="1" isfriend="0" isfamily="0" />
+	<photo id="128216006" owner="71711667@N00" secret="105d995ae1" server="50" title="DSC00833" ispublic="1" isfriend="0" isfamily="0" />
+	<photo id="128216005" owner="71711667@N00" secret="07ab296def" server="56" title="DSC00755" ispublic="1" isfriend="0" isfamily="0" />
+	<photo id="128216004" owner="71711667@N00" secret="fdcc7f9df4" server="1" title="DSC00663" ispublic="1" isfriend="0" isfamily="0" />
+</photos>
+</rsp> -->
+
+<!-- error
+<?xml version="1.0" encoding="utf-8" ?>
+<rsp stat="fail">
+	<err code="112" msg="Method &quot;&quot; not found" />
+</rsp>
+ -->

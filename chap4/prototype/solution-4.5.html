@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Right now!</title>
+    <script type="text/javascript" src="prototype.js"></script>
+    <script>
+      function update() {
+        new Ajax.PeriodicalUpdater( 'timeDisplay', 'date2.jsp',
+          {
+            method: 'get',
+            frequency: 5
+          }
+        );
+      }
+    </script>
+  </head>
+
+  <body>
+    <button type="button" onclick="update()">Click me!</button>
+    <span id="timeDisplay"/>
+  </body>
+
+</html>

@@ -1,0 +1,157 @@
+<html>
+<head>
+
+<script src="lib/prototype.js" type="text/javascript"></script>
+<script src="lib/scriptaculous.js" type="text/javascript"></script>
+
+<script>
+function AjaxHTML(url, target)  {
+    AjaxOperation(url, function(req) {replaceHTML(req, target);});
+}
+
+function AjaxOperation(url, func) {
+    var req;
+    if (window.XMLHttpRequest) {
+        req = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        req = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    if (req) {
+        req.onreadystatechange = function () {onReady(req, func)};
+        req.open("GET", url, true);
+        req.send("");
+    }
+}    
+
+function onReady(req, func) {
+   if (req.readyState == 4) {
+       if (req.status == 200) {
+           func(req);
+       } 
+   }
+}
+
+function replaceHTML(req, target)  {
+    var content = req.responseText;
+    target.innerHTML = content;
+}
+
+var revertFlag = true;
+function checkRevert(req)  {
+    var content = req.responseText;
+    revertFlag = 1 == (content - 0);
+}
+
+var lastHover;
+function handleHover(dragged, dropon, event, target)  {
+    itemid = dragged.getAttribute("itemid");
+    if (lastHover == itemid)  {
+        return;
+    }
+    lastHover = itemid;
+    AjaxOperation("revert-" + itemid + ".txt", 
+            function(req) {checkRevert(req)});
+    AjaxHTML("hover-" + itemid + ".html", target);
+}
+
+function handleDrop(dragged, dropon, event, target)  {
+    lastHover = null;
+    itemid = dragged.getAttribute("itemid");
+    AjaxHTML("drop-" + itemid + ".html", target);
+}
+
+function handleRevert(dragged)  {
+    return revertFlag;
+}
+</script>
+
+</head>
+
+<style>
+  div.carthoverclass {
+    border:1px solid blue;
+  }
+  div.cart  {
+    z-index:100;
+    text-align:center;
+    height:200px;
+    padding:10px;
+    background-color:#abf
+  }
+</style>
+
+<body>
+  <h3>AJAX Shopping Cart</h3>    
+
+  <table><tr>
+
+    <td>
+      <div alt="Product1" id="product_1" itemid="01" style="z-index:500" /> 
+        <img alt="Product1" src="crane_3d.jpg" />
+        <br>
+        AJAX in Action.
+      </div>
+      <script>
+        new Draggable( 'product_1', {revert:handleRevert} )
+      </script>
+    </td>
+
+    <td>
+      <div alt="Product2" id="product_2" itemid="02" style="z-index:500" /> 
+        <img alt="Product2" src="black_3d.jpg" />
+        <br>
+        Ruby for Rails.
+      </div>
+      <script>
+      new Draggable( 'product_2', {revert:handleRevert} )
+      </script>
+    </td>
+
+    <td>
+      <div alt="Product3" id="product_3" itemid="03" style="z-index:500" /> 
+        <img alt="Product3" src="rock.jpg" />
+        <br>
+        An ordinary rock.
+      </div>
+      <script>
+        new Draggable( 'product_3', {revert:handleRevert} )
+      </script>
+    </td>
+
+  </tr></table>
+
+
+  <table><tr>
+  
+    <td width="400px">
+      <div id="cart" class="cart" >
+        Book Shopping Cart
+      </div>
+
+    </td>
+    <td width="25">
+    </td>
+
+    <td width="50">
+      <span id="cartinfo"></span>
+    </td>
+
+    </tr></table>
+
+<script>
+cartinfoDiv = document.getElementById("cartinfo");
+Droppables.add('cart', 
+       { hoverclass:'carthoverclass', 
+         onHover:function(dragged, dropon, event) {
+                handleHover(dragged, dropon, event, cartinfoDiv);
+         },
+         onDrop:function(dragged, dropon, event) {
+                handleDrop(dragged, dropon, event, cartinfoDiv);}
+         }
+)
+</script>
+
+
+</body>
+</html>
+

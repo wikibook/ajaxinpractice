@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Mouse events!</title>
+    <script type="text/javascript" src="prototype-1.5.1.js">
+    </script>
+    <script type="text/javascript">
+      window.onload = function() {
+        Event.observe('anImage', 'click', react);
+        Event.observe('anImage', 'mousedown', react);
+        Event.observe('anImage', 'mouseup', react);
+      }
+
+      function react(event) {
+        $('info').innerHTML +=
+          'I bark for ' + event.type +
+          ' at (' + Event.pointerX(event) + ','+
+          Event.pointerY(event) + ')!<br/>';
+      }
+    </script>
+  </head>
+
+  <body>
+    <img src="image.jpg" id="anImage"/>
+    <div id="info"></div>
+  </body>
+</html>

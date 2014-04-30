@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>Find a Recipe!</title>
+    <script type="text/javascript" src="../prototype.js"></script>
+    <script type="text/javascript" src="ProgressBar.js"></script>
+    <script type="text/javascript">
+      function performSearch() {
+        $('resultsContainer').innerHTML = '';
+        new Ajax.Request(
+          '/aip.chap10/command/SearchForRecipes',
+          {
+            onSuccess: showResults,
+            onFailure: showResults,
+            parameters:
+              $H({
+                terms: $F('searchTermsField')
+              }).toQueryString()
+          }
+        );
+        if (!window.progressBar) {
+          window.progressBar = new ProgressBar(
+            'progressBarContainer',
+            {
+              className: 'progressBar',
+              color: 'blue',
+              interval: 1000
+            }
+          );
+        }
+        progressBar.start();
+      }
+
+      function showResults(request) {
+        progressBar.stop();
+        $('resultsContainer').innerHTML = request.responseText;
+      }
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <style type="text/css">
+      .progressBar {
+        position: relative;
+        width: 256px;
+        height: 16px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <fieldset>
+      <legend>Find Recipes</legend>
+
+      <form name="searchForm"
+            onsubmit="performSearch();return false;">
+
+        <div>
+          <label>Where recipe title contains: </label>
+          <input type="text" name="searchTerms"
+                 id="searchTermsField"/>
+        </div>
+
+        <div>
+          <input type="submit" value="Search!"/>
+        </div>
+      </form>
+
+      <div id="progressBarContainer"></div>
+
+      <div id="resultsContainer"></div>
+
+    </fieldset>
+
+  </body>
+</html>

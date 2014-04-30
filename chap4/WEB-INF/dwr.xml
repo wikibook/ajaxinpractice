@@ -1,0 +1,13 @@
+<!DOCTYPE dwr PUBLIC
+    "-//GetAhead Limited//DTD Direct Web Remoting 1.0//EN"
+    "http://www.getahead.ltd.uk/dwr/dwr10.dtd">
+
+<dwr>
+  <allow>
+    <convert converter="bean" match="org.bibeault.*"/>
+
+    <create creator="new" javascript="CustomerFactory">
+      <param name="class" value="org.bibeault.aip.dwr.CustomerFactory"/>
+    </create>
+  </allow>
+</dwr>

@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>I Need Validation</title>
+    <script type="text/javascript" src="prototype-1.5.1.js">
+    </script>
+    <script type="text/javascript">
+      window.onload = function() {
+        Event.observe('zipCodeField','blur',validateZipCode);
+        $('addressField').focus();
+      }
+
+      function validateZipCode(event) {
+        new Ajax.Request(
+          '/aip.chap5/validateZipCode',
+          {
+            method: 'get',
+            parameters: $('infoForm').serialize(true),
+            onSuccess: function (transport) {
+              if (transport.responseText.length != 0)
+                alert(transport.responseText);
+            }
+          }
+        );
+      }
+    </script>
+  </head>
+
+  <body>
+    <form id="infoForm">
+      <div>
+        <label>Address:</label>
+        <input type="text" id="addressField" name="address"/>
+      </div>
+      <div>
+        <label>City:</label>
+        <input type="text" id="cityField" name="city"/>
+        <label>State:</label>
+        <input type="text" id="stateField" name="state"/>
+        <label>Zip Code:</label>
+        <input type="text" id="zipCodeField" name="zipCode"/>
+      </div>
+      <div>
+        <input type="submit" id="submitButton"/>
+      </div>
+    </form>
+    <div id="info"></div>
+  </body>
+</html>

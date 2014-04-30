@@ -1,0 +1,34 @@
+<HTML>
+  <HEAD>
+    <TITLE>Application Launchpad</TITLE>
+<script type='text/javascript'>
+
+function openWithoutToolbars(URL, windowName, width, height)
+{
+    window.open(
+        URL,
+        windowName,
+        'status=1,scrollbars=1,resizable=1'+
+        (width?',width='+width:'')+
+        (height?',height='+height:''),
+        true
+    );
+}
+
+function openRegistration()
+{
+    openWithoutToolbars(
+        './Registration.html',
+        'REGISTRATION',
+        480, 580
+    );
+}
+
+</script>
+  </HEAD>
+  <BODY>
+    <A HREF='javascript:openRegistration()'>
+      Launch Registration
+    </A>
+  </BODY>
+</HTML>

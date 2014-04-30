@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>Hello Ajax version 6</title>
+<style type='text/css'>
+* { font-family: Tahoma, Arial, sans-serif; }
+#helloTitle{ color: #48f; }
+.sidebar{
+  background-color: #adf;
+  color: navy;
+  border: solid blue 1px;
+  width: 180px;
+  height: 200px;
+  padding: 2px;
+  margin: 3px;
+  float: left;
+}
+</style>
+<script type='text/javascript' src='prototype.js'></script>
+<script type='text/javascript'>
+window.onload=function(){
+  $('helloBtn').onclick=function(){
+    var name=$('helloTxt').value;
+    new Ajax.Request(
+      "hello6.jsp?name="+encodeURI(name),
+      {
+        method:"get",
+        onComplete:function(xhr){
+          var responseDoc=xhr.responseXML;
+          update(responseDoc);
+        }
+      }
+    );
+  }
+}
+
+function update(doc){
+  var personNode=doc.getElementsByTagName('person')[0];
+  var initial=personNode.getAttribute('initial');
+  var nameNode=personNode.getElementsByTagName('name')[0];
+  var name=nameNode.firstChild.data;
+  var likesNode=personNode.getElementsByTagName('likes')[0];
+  var likesList=likesNode.getElementsByTagName('item');
+  var likes=[];
+  for (var i=0;i<likesList.length;i++){
+    var itemNode=likesList[i];
+    likes[i]=itemNode.firstChild.data;
+  }
+  var recipeNode=personNode.getElementsByTagName('recipe')[0];
+  var recipeNameNode=recipeNode.getElementsByTagName('name')[0];
+  var recipeName=recipeNameNode.firstChild.data;
+  var recipeSuggestNode=recipeNode.getElementsByTagName('serving-suggestion')[0];
+  var recipeSuggest=recipeSuggestNode.firstChild.data;
+  var ingredientsList=recipeNode.getElementsByTagName('ingredient');
+  var ingredients={};
+  for(var i=0;i<ingredientsList.length;i++){
+    var ingredientNode=ingredientsList[i];
+    var qty=ingredientNode.getAttribute("qty");
+    var iname=ingredientNode.firstChild.data;
+    ingredients[iname]=qty;
+  }
+
+  $('helloTitle').innerHTML="<h1>Hello, <b><i>"+name+"</i></b></h1>";
+  var likesHTML='<h5>'+initial+' likes...</h5><hr/>';
+  for (var i=0;i<likes.length;i++){
+    likesHTML+=likes[i]+"<br/>";
+  }
+  $('likesList').innerHTML=likesHTML;
+  var recipeHTML='<h5>'+initial+'\'s favorite recipe is '+recipeName+'</h5>';
+  for (key in ingredients){
+    recipeHTML+=key+" : "+ingredients[key]+"<br/>";
+  }
+  recipeHTML+='<br/><i>'+recipeSuggest+'</i>';
+  $('ingrList').innerHTML=recipeHTML;
+}
+
+</script>
+</head>
+<body>
+
+<div id='likesList' class='sidebar'>
+<h5>Likes</h5><hr/>
+</div>
+<div id='ingrList' class='sidebar'>
+<h5>Ingredients</h5><hr/>
+</div>
+<div>
+<div id='helloTitle'>
+<h1>Hello, stranger</h1>
+</div>
+<p>Please introduce yourself by entering your name in the box below</p>
+<input type='text' size='24' id='helloTxt'></input>&nbsp;<button id='helloBtn'>Submit</button>
+</body>
+</div>
+</html>

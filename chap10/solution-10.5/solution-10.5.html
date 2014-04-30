@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>Find a Recipe! Quickly!</title>
+    <script type="text/javascript" src="../prototype.js"></script>
+    <script type="text/javascript">
+      function performSearch() {
+        $('resultsContainer').innerHTML = '';
+        var request = new Ajax.Request(
+          '/aip.chap10/command/SearchForRecipes',
+          {
+            onSuccess: function() { showResults(request) },
+            onFailure: function() { showResults(request) },
+            parameters:
+              $H({
+                terms: $F('searchTermsField')
+              }).toQueryString()
+          }
+        );
+        request.timer = setTimeout(
+          function() {
+            request.transport.abort();
+            Element.hide('processingNotice');
+            $('resultsContainer').innerHTML = 'Request timed out!'
+          },
+          3000
+        );
+        Element.show('processingNotice');
+      }
+
+      function showResults(request) {
+        clearTimeout(request.timer);
+        Element.hide('processingNotice');
+        $('resultsContainer').innerHTML =
+          request.transport.responseText;
+      }
+    </script>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+  </head>
+
+  <body>
+
+    <fieldset>
+      <legend>Find Recipes</legend>
+
+      <form name="searchForm"
+            onsubmit="performSearch();return false;">
+
+        <div>
+          <label>Where recipe title contains: </label>
+          <input type="text" name="searchTerms"
+                 id="searchTermsField"/>
+        </div>
+
+        <div>
+          <input type="submit" value="Search!"/>
+        </div>
+      </form>
+
+      <div id="processingNotice" style="display:none">
+        <img src="whirlybug.gif"/>Searching!
+      </div>
+
+      <div id="resultsContainer"></div>
+
+    </fieldset>
+
+  </body>
+</html>
+
+
+
